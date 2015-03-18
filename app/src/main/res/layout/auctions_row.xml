@@ -2,26 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="3dp"
+    android:paddingBottom="7dp"
+    android:paddingTop="7dp"
     android:orientation="horizontal">
-
-    <LinearLayout
-        android:id="@+id/title_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:gravity="center_horizontal"
-        android:background="@color/blue_space"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:textColor="@color/white_text"
-            android:textSize="20dp"
-            android:layout_height="wrap_content"
-            android:text="@string/auction_item_title" />
-    </LinearLayout>
 
 
     <!--<LinearLayout-->
@@ -129,7 +112,6 @@
     <!--</LinearLayout>-->
     <!--</LinearLayout>-->
     <LinearLayout
-        android:layout_below="@+id/title_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
@@ -140,7 +122,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:layout_height="100dp"
                 android:scaleType="fitXY"
                 android:background="@android:drawable/arrow_up_float"
@@ -148,7 +130,7 @@
                 android:src="@drawable/image_frame" />
 
             <ImageView
-                android:layout_width="108dp"
+                android:layout_width="118dp"
                 android:layout_height="98dp"
                 android:scaleType="fitXY"
                 android:background="@android:drawable/arrow_up_float"
@@ -160,10 +142,18 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_gravity="center_vertical"
 
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/blue_space"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:text="@string/auction_item_title" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -173,6 +163,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:textSize="25dp"
+                    android:textColor="@color/white_text"
                     android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="$458" />
@@ -180,21 +171,25 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white_text"
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
                         android:text="(" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
                         android:text="3" />
 
                     <TextView
                         android:layout_width="wrap_content"
+                        android:textColor="@color/white_text"
                         android:layout_height="wrap_content"
                         android:text=" bids)" />
 
@@ -205,12 +200,13 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white_text"
                     android:textStyle="bold"
                     android:text="4h left(Thursday, 1AM" />
 
@@ -222,11 +218,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
                         android:text="From:" />
+
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
                         android:text=" US" />
                 </LinearLayout>
             </LinearLayout>
