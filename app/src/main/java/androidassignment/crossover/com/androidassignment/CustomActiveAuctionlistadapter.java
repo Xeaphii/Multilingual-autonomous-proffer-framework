@@ -2,7 +2,10 @@ package androidassignment.crossover.com.androidassignment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.internal.view.menu.MenuBuilder;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -34,6 +37,32 @@ public class CustomActiveAuctionlistadapter extends ArrayAdapter<String> {
         ImageView imageView = (ImageView) single_row.findViewById(R.id.imageView);
         textView.setText(color_names[position]);
         imageView.setImageResource(image_id[position]);*/
+        View overflow = single_row.findViewById(R.id.album_overflow);
+        overflow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context, v) {
+                    @Override
+                    public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.album_overflow_rename:
+
+                                return true;
+
+
+                            default:
+                                return super.onMenuItemSelected(menu, item);
+                        }
+                    }
+                };
+
+                popupMenu.inflate(R.menu.auction_item_menu);
+
+
+                popupMenu.show();
+            }
+        });
         return single_row;
     }
+
 }

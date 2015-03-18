@@ -33,4 +33,5 @@ public class ActiveAuctionsFragment extends Fragment {
         });
         return rootView;
     }
+
 }
