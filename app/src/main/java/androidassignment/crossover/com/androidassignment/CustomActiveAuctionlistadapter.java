@@ -2,6 +2,7 @@ package androidassignment.crossover.com.androidassignment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
-import android.widget.Toast;
 
 /**
  * Created by Sunny on 3/18/2015.
@@ -53,9 +53,14 @@ public class CustomActiveAuctionlistadapter extends ArrayAdapter<String> {
                             @Override
                             public boolean onMenuItemClick(MenuItem arg0) {
                                 // TODO Auto-generated method stub
-                                Toast.makeText(context,
-                                        "Do something!", Toast.LENGTH_SHORT)
-                                        .show();
+                                if (arg0.getItemId() == R.id.action_delete)
+                                {
+                                    //do something
+                                }else {
+                                    Intent editItem = new Intent(context,EditAuctionItem.class);
+                                    context.startActivity(editItem);
+
+                                }
 
                                 return false;
                             }

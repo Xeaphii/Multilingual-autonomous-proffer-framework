@@ -35,4 +35,5 @@
     <string name="add_item">Add item</string>
     <string name="place_bid">Place Bid</string>
     <string name="add_auction_item">Add Auction Item</string>
+    <string name="modify_auction_item">Modify auction item</string>
 </resources>

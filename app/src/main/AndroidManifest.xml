@@ -22,6 +22,10 @@
         <activity
             android:name=".PlaceBid"
             android:label="@string/place_bid"></activity>
+        <activity
+            android:name=".EditAuctionItem"
+            android:label="@string/modify_auction_item"></activity>
+
     </application>
 
 </manifest>
