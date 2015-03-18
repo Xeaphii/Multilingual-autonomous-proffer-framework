@@ -29,4 +29,5 @@
     <string name="welcome_back">Welcome back!</string>
     <string name="already_acount">Already have account? </string>
     <string name="click_here">click here</string>
+    <string name="auction_item_title">Auction Item Title</string>
 </resources>

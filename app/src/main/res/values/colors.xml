@@ -3,4 +3,5 @@
     <color name="logo_text">#fff</color>
     <color name="white_text">#fff</color>
     <color name="blue_text">#7bc2ff</color>
+    <color name="blue_space">#7bc2ff</color>
 </resources>
