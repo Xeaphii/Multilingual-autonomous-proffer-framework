@@ -1,10 +1,12 @@
 package androidassignment.crossover.com.androidassignment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class ActiveAuctionsFragment extends Fragment {
@@ -22,6 +24,13 @@ public class ActiveAuctionsFragment extends Fragment {
         CustomActiveAuctionlistadapter adapter = new CustomActiveAuctionlistadapter(getActivity(), image_id, color_names);
         ListView lv = (ListView) rootView.findViewById(R.id.listView);
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent placeBid = new Intent(getActivity(), PlaceBid.class);
+                startActivity(placeBid);
+            }
+        });
         return rootView;
     }
 }

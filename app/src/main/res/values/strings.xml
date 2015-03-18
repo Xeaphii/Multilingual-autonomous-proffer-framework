@@ -33,4 +33,6 @@
     <string name="click_here">click here</string>
     <string name="auction_item_title">Auction Item Title</string>
     <string name="add_item">Add item</string>
+    <string name="place_bid">Place Bid</string>
+    <string name="add_auction_item">Add Auction Item</string>
 </resources>

@@ -18,7 +18,10 @@
         </activity>
         <activity
             android:name=".AddAuctionItem"
-            android:label="Add Auction Item"></activity>
+            android:label="@string/add_auction_item"></activity>
+        <activity
+            android:name=".PlaceBid"
+            android:label="@string/place_bid"></activity>
     </application>
 
 </manifest>

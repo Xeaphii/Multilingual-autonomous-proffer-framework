@@ -41,12 +41,14 @@
                             android:layout_marginTop="-2dp"
                             android:padding="10dp"
                             android:layout_marginBottom="5dp"
+                            android:enabled="false"
                             android:hint="Auction item title"
                             android:textColorHint="#bbbbbb"
                             android:drawableLeft="@drawable/user" />
 
                         <EditText
                             android:id="@+id/et_category"
+                            android:enabled="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edittext_default_bg"
@@ -77,16 +79,7 @@
                             android:scaleType="fitXY"
                             android:background="@drawable/cam" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:layout_centerHorizontal="true"
-                            android:layout_gravity="center_vertical"
-                            android:textColor="@color/white_text"
-                            android:textSize="18dp"
-                            android:text="Add photo" />
+
                     </RelativeLayout>
                 </RelativeLayout>
 
@@ -94,7 +87,7 @@
                 <EditText
                     android:id="@+id/et_descp"
                     android:inputType="textMultiLine"
-
+                    android:enabled="false"
                     android:lines="5"
                     android:minLines="4"
                     android:gravity="top|left"
@@ -130,6 +123,7 @@
                     android:background="@drawable/edittext_bottom_bg"
                     android:layout_marginTop="-2dp"
                     android:padding="10dp"
+                    android:enabled="false"
                     android:hint="End date"
                     android:textColorHint="#bbbbbb"
                     android:password="true"
@@ -144,6 +138,7 @@
                     android:background="@drawable/edittext_bottom_bg"
                     android:layout_marginTop="-2dp"
                     android:padding="10dp"
+                    android:enabled="false"
                     android:hint="Location"
                     android:textColorHint="#bbbbbb"
                     android:password="true"
@@ -164,7 +159,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:layout_margin="4dp"
-        android:text="@string/continue_button"
+        android:text="@string/place_bid"
         style="@style/DefaultButtonText"
         android:background="@drawable/button_default_bg" />
 </RelativeLayout>
