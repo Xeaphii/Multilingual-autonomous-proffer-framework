@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">AndroidAssignment</string>
+    <string name="app_name">Auctions</string>
     <string name="auction">Auction</string>
     <string name="log_in">Log in.</string>
     <string name="action_settings">Settings</string>
