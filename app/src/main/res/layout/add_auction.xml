@@ -1,8 +1,164 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/radialback"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/radialback">
 
-</LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_above="@+id/btnSingIn"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/log_in_layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="10dp">
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_marginRight="105dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/etUserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext_default_bg"
+                            android:layout_marginTop="-2dp"
+                            android:padding="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:hint="Auction item title"
+                            android:textColorHint="#bbbbbb"
+                            android:drawableLeft="@drawable/user" />
+
+                        <EditText
+                            android:id="@+id/et_category"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext_default_bg"
+                            android:layout_marginTop="-2dp"
+                            android:padding="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:hint="Category"
+                            android:textColorHint="#bbbbbb"
+                            android:drawableLeft="@drawable/user" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/snap_layout"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp">
+
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:scaleType="fitXY"
+                            android:background="@drawable/cam" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/white_text"
+                            android:textSize="18dp"
+                            android:text="Add photo" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+
+                <EditText
+                    android:id="@+id/et_descp"
+                    android:inputType="textMultiLine"
+
+                    android:lines="5"
+                    android:minLines="4"
+                    android:gravity="top|left"
+                    android:maxLines="5"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:scrollbars="vertical"
+                    android:background="@drawable/edittext_default_bg"
+                    android:layout_marginTop="-2dp"
+                    android:padding="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="Description"
+                    android:textColorHint="#bbbbbb" />
+
+                <EditText
+                    android:id="@+id/etPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_bottom_bg"
+                    android:layout_marginTop="-2dp"
+                    android:padding="10dp"
+                    android:hint="Minimum bid"
+                    android:layout_marginBottom="5dp"
+                    android:textColorHint="#bbbbbb"
+                    android:password="true"
+                    android:drawableLeft="@drawable/password" />
+
+
+                <EditText
+                    android:id="@+id/date_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_bottom_bg"
+                    android:layout_marginTop="-2dp"
+                    android:padding="10dp"
+                    android:hint="End date"
+                    android:textColorHint="#bbbbbb"
+                    android:password="true"
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/password" />
+
+                <EditText
+                    android:id="@+id/country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/edittext_bottom_bg"
+                    android:layout_marginTop="-2dp"
+                    android:padding="10dp"
+                    android:hint="Location"
+                    android:textColorHint="#bbbbbb"
+                    android:password="true"
+                    android:drawableLeft="@drawable/password" />
+
+
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnSingIn"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="4dp"
+        android:text="@string/continue_button"
+        style="@style/DefaultButtonText"
+        android:background="@drawable/button_default_bg" />
+</RelativeLayout>
