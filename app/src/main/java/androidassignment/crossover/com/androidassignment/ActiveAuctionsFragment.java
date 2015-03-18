@@ -31,6 +31,7 @@ public class ActiveAuctionsFragment extends Fragment {
                 startActivity(placeBid);
             }
         });
+
         return rootView;
     }
 
