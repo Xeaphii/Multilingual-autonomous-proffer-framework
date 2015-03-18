@@ -19,7 +19,7 @@
         <item name="android:shadowRadius">1</item>
     </style>
     <string name="sign_in">Sign in</string>
-    <string name="no_account">I don't have an account yet.</string>
+    <string name="no_account">I don\'t have an account yet.</string>
     <string name="create_account">ceate one</string>
     <string name="sign_up">Sign up</string>
     <string name="welcome">Welcome!</string>
