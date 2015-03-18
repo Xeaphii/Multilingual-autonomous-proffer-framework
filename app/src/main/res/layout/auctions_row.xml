@@ -132,15 +132,30 @@
         android:layout_below="@+id/title_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:layout_width="110dp"
-            android:layout_height="100dp"
-            android:scaleType="fitXY"
-            android:background="@android:drawable/arrow_up_float"
-            android:gravity="center_horizontal|center_vertical"
-            android:src="@drawable/ic_launcher" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                android:background="@android:drawable/arrow_up_float"
+                android:gravity="center_horizontal|center_vertical"
+                android:src="@drawable/image_frame" />
+
+            <ImageView
+                android:layout_width="108dp"
+                android:layout_height="98dp"
+                android:scaleType="fitXY"
+                android:background="@android:drawable/arrow_up_float"
+                android:gravity="center_horizontal|center_vertical"
+                android:src="@drawable/ic_launcher" />
+        </RelativeLayout>
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -167,10 +182,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="("/>
+                        android:text="(" />
 
                     <TextView
                         android:layout_width="wrap_content"

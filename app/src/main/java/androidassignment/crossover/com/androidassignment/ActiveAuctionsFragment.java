@@ -5,15 +5,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 public class ActiveAuctionsFragment extends Fragment {
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+    String color_names[] = {"red", "green", "blue", "yellow", "pink", "brown"};
+    Integer image_id[] = {R.drawable.ic_launcher, R.drawable.ic_launcher,
+            R.drawable.ic_launcher, R.drawable.ic_launcher,
+            R.drawable.ic_launcher, R.drawable.ic_launcher};
 
-		View rootView = inflater.inflate(R.layout.fragment_active_auctions, container, false);
-		
-		return rootView;
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_active_auctions, container, false);
+        CustomActiveAuctionlistadapter adapter = new CustomActiveAuctionlistadapter(getActivity(), image_id, color_names);
+        ListView lv = (ListView) rootView.findViewById(R.id.listView);
+        lv.setAdapter(adapter);
+        return rootView;
+    }
 }
