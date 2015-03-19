@@ -55,6 +55,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/forgot_password"
         android:layout_below="@+id/log_in_layout"
         android:layout_width="wrap_content"
         android:textColor="@color/blue_text"
@@ -106,6 +107,7 @@
             android:text="@string/no_account" />
 
         <TextView
+            android:id="@+id/create_user"
             android:layout_width="wrap_content"
             android:textColor="@color/blue_text"
             android:layout_height="wrap_content"

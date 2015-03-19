@@ -10,11 +10,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".AddAuctionItem"
@@ -25,6 +21,22 @@
         <activity
             android:name=".EditAuctionItem"
             android:label="@string/modify_auction_item"></activity>
+        <activity
+            android:name=".SignIn"
+            android:label="@string/sign_in_actionbar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SignUp"
+            android:label="@string/sign_up_actionbar"></activity>
+        <activity
+            android:name=".ForgotPassword"
+            android:label="@string/forgot_pass_actionbar"></activity>
+
 
     </application>
 
