@@ -36,7 +36,9 @@
         <activity
             android:name=".ForgotPassword"
             android:label="@string/forgot_pass_actionbar"></activity>
-
+        <activity
+            android:name=".ChangePassword"
+            android:label="@string/change_password"></activity>
 
     </application>
 

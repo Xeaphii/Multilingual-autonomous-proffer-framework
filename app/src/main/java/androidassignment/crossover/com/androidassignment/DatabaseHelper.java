@@ -120,16 +120,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Boolean VerifyUser(UserProfile user) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_USER /*+ " WHERE "
-                + USER_NAME + " = '" + user.getName()+"';"*/;
+        String selectQuery = "SELECT  * FROM " + TABLE_USER + " WHERE "
+                + USER_NAME + " = '" + user.getName() + "';";
 
-
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        if (c != null)
+        Cursor c = null;
+        Boolean check = false;
+        try {
+            c = db.rawQuery(selectQuery, null);
             c.moveToFirst();
-        Boolean check = user.getHashedPassword().equals(c.getString(c.getColumnIndex(HASHED_PASSWORD)));
-        db.close();
+            check = user.getHashedPassword().equals(c.getString(c.getColumnIndex(HASHED_PASSWORD)));
+        } catch (Exception e) {
+        }
+        if (c != null)
+
+            db.close();
         if (check)
             return true;
         else
@@ -137,28 +141,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public int ChangeUserPassword(String userName, String OldPassword, String Newpassword) {
+    public int ChangeUserPassword(String userName, String NewPassword) {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_USER + " WHERE "
-                + USER_NAME + " = " + userName;
-
-
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        if (c != null)
-            c.moveToFirst();
-
-        if (!(userName.equals(c.getString(c.getColumnIndex(HASHED_PASSWORD)))))
-            return -1;//User Old Password not matched
-
 
         ContentValues values = new ContentValues();
-        values.put(HASHED_PASSWORD, Newpassword);
+        values.put(HASHED_PASSWORD, NewPassword);
 
         // updating row
         return db.update(TABLE_USER, values, USER_NAME + " = ?",
                 new String[]{String.valueOf(userName)});
+
+
     }
 }

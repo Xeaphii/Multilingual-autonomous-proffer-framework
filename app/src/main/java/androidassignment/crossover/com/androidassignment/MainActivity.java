@@ -4,7 +4,9 @@ package androidassignment.crossover.com.androidassignment;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -22,6 +24,10 @@ public class MainActivity extends FragmentActivity implements
     private ActionBar actionBar;
     // Tab titles
     private String[] tabs = {"Active", "Won", "Lost"};
+    SharedPreferences prefs;
+    public static final String MyPREFERENCES = "MyPrefs";
+    private static final int CHECK_ACTIVITY = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,7 @@ public class MainActivity extends FragmentActivity implements
         setContentView(R.layout.activity_main);
 
         // Initilization
+        prefs = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         viewPager = (ViewPager) findViewById(R.id.pager);
         actionBar = getActionBar();
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
@@ -99,11 +106,36 @@ public class MainActivity extends FragmentActivity implements
                 startActivity(AddItemIntent);
                 // search action
                 return true;
+            case R.id.action_log_out:
+                prefs.edit().putString("is_initialized", "0").commit();
+                prefs.edit().putString("user_name", "").commit();
+                Intent signin = new Intent(getApplicationContext(), SignIn.class);
+                startActivity(signin);
+                finish();
+                // search action
+                return true;
+            case R.id.action_change_password:
+
+                Intent changePassword = new Intent(getApplicationContext(), ChangePassword.class);
+                startActivityForResult(changePassword, CHECK_ACTIVITY);
+
+                // search action
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CHECK_ACTIVITY) {
+            if (resultCode == RESULT_CANCELED) {
+                Intent signin = new Intent(getApplicationContext(), SignIn.class);
+                startActivity(signin);
+                finish();
+            }
+        }
+    }
 }

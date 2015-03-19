@@ -6,4 +6,12 @@
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/add_item"
         android:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_log_out"
+        android:title="@string/log_out"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/action_change_password"
+        android:title="@string/change_password"
+        android:showAsAction="never" />
 </menu>

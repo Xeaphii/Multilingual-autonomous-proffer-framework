@@ -39,4 +39,7 @@
     <string name="sign_in_actionbar">Sign in</string>
     <string name="sign_up_actionbar">Sign Up</string>
     <string name="forgot_pass_actionbar">Forgot Password</string>
+    <string name="change_password">Change Password</string>
+    <string name="log_out">Logout</string>
+    <string name="account">Account</string>
 </resources>
