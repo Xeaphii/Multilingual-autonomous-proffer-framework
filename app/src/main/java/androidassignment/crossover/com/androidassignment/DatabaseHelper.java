@@ -20,6 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table Names
     private static final String TABLE_USER = "tb_users";
     private static final String TABLE_AUCTION_ITEM = "tb_auction_items";
+    private static final String TABLE_BID = "tb_bid";
 
     // Common column names
     private static final String TABLE_USER_KEY_ID = "id";
@@ -36,6 +37,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String END_DATE = "end_date";
     private static final String LOCATION = "location";
     private static final String IMAGE_LOCATION = "image_location";
+    private static final String USER_ID = "user_id";
+
+    private static final String TABLE_BID_KEY_ID = "id";
+    private static final String TABLE_BID_USER_ID = "user_id";
+    private static final String TABLE_BID_AUCTION_ITEM_ID = "auction_item_id";
+    private static final String AMOUNT = "amount";
 
 
     // Table Create Statements
@@ -43,15 +50,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_USER = "CREATE TABLE "
             + TABLE_USER + "(" + TABLE_USER_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + USER_NAME
             + " VARCHAR(45)," + HASHED_PASSWORD + " VARCHAR(256)," + EMAIL
-            + " VARCHAR(45)" + ")";
+            + " VARCHAR(50)" + ")";
 
     // Tag table create statement
     private static final String CREATE_TABLE_AUCTION_ITEM = "CREATE TABLE " + TABLE_AUCTION_ITEM
             + "(" + TABLE_AUCTION_ITEM_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + TITLE
-            + " VARCHAR(45)," + CATEGORY + " VARCHAR(45)," + MIN_BID + " VARCHAR(45),"
+            + " VARCHAR(80)," + CATEGORY + " VARCHAR(45)," + MIN_BID + " VARCHAR(45),"
             + END_DATE + " VARCHAR(45)," + LOCATION + " VARCHAR(45),"
-            + IMAGE_LOCATION + " VARCHAR(45)," + DESCRIPTION
+            + IMAGE_LOCATION + " VARCHAR(45)," + USER_ID + " VARCHAR(45)," + DESCRIPTION
             + " VARCHAR(45)" + ")";
+
+    private static final String CREATE_TABLE_BID = "CREATE TABLE " + TABLE_BID
+            + "(" + TABLE_BID_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + TABLE_BID_USER_ID
+            + " INTEGER," + TABLE_BID_AUCTION_ITEM_ID + " INTEGER," + AMOUNT + " VARCHAR(45)"
+            + ")";
 
 
     public DatabaseHelper(Context context) {
@@ -64,6 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // creating required tables
         db.execSQL(CREATE_TABLE_USER);
         db.execSQL(CREATE_TABLE_AUCTION_ITEM);
+        db.execSQL(CREATE_TABLE_BID);
 
     }
 
@@ -72,7 +85,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // on upgrade drop older tables
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_AUCTION_ITEM);
-
+        db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_BID);
         // create new tables
         onCreate(db);
     }
@@ -105,6 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(MIN_BID, item.getMinBid());
         values.put(END_DATE, item.getEndDate());
         values.put(LOCATION, item.getLocation());
+        values.put(USER_ID, item.getUserId());
         values.put(IMAGE_LOCATION, item.getImageLoc());
 
 
@@ -152,7 +166,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // updating row
         return db.update(TABLE_USER, values, USER_NAME + " = ?",
                 new String[]{String.valueOf(userName)});
-
-
     }
 }
