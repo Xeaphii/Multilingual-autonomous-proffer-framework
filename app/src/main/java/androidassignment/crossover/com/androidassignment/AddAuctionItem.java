@@ -61,9 +61,9 @@ public class AddAuctionItem extends Activity {
                 else {
                     ImageManup.saveToInternalSorage(ImageResult, getApplicationContext(), Integer.toString(result));
                     Toast.makeText(getApplicationContext(), "Item posted successfully.", Toast.LENGTH_LONG).show();
+                    finish();
                 }
 
-                Toast.makeText(getApplicationContext(), "" + ImageResult.getWidth(), Toast.LENGTH_LONG).show();
             }
         });
         AddPhoto.setOnClickListener(new View.OnClickListener() {

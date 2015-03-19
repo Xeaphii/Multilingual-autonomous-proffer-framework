@@ -38,7 +38,7 @@ public class ImageManup {
         return directory.getAbsolutePath();
     }
 
-    private Bitmap loadImageFromStorage(String ImageName, Context context) {
+    public static Bitmap loadImageFromStorage(String ImageName, Context context) {
 
         try {
             ContextWrapper cw = new ContextWrapper(context);
