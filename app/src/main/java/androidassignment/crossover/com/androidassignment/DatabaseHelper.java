@@ -174,7 +174,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int GetUserId(String UserName) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  "+TABLE_USER_KEY_ID+" FROM " + TABLE_USER + " WHERE "
+        String selectQuery = "SELECT  * FROM " + TABLE_USER + " WHERE "
                 + USER_NAME + " = '" + UserName + "';";
 
         Cursor c = null;

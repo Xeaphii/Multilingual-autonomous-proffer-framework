@@ -54,18 +54,16 @@ public class AddAuctionItem extends Activity {
                 item.setMinBid(MinBid.getText().toString());
                 item.setLocation(Location.getText().toString());
                 item.setEndDate(EndDate.getText().toString());
-                item.setUserId(db.GetUserId(prefs.getString("is_initialized", "0")));
+                item.setUserId(db.GetUserId(prefs.getString("user_name", "")));
                 int result = db.InsertAuctionItem(item);
                 if (result == -1)
                     Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_LONG).show();
                 else {
+                    ImageManup.saveToInternalSorage(ImageResult, getApplicationContext(), Integer.toString(result));
                     Toast.makeText(getApplicationContext(), "Item posted successfully.", Toast.LENGTH_LONG).show();
-                    ImageManup.saveToInternalSorage(ImageResult,getApplicationContext(),Integer.toString(result));
                 }
-/*
-                Toast.makeText(getApplicationCo
-                ntext(),""+db.ImageIndex(),Toast.LENGTH_LONG).show();
-*/
+
+                Toast.makeText(getApplicationContext(), "" + ImageResult.getWidth(), Toast.LENGTH_LONG).show();
             }
         });
         AddPhoto.setOnClickListener(new View.OnClickListener() {

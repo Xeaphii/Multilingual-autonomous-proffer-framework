@@ -16,6 +16,8 @@ import java.io.FileOutputStream;
  */
 public class ImageManup {
     public static String saveToInternalSorage(Bitmap bitmapImage, Context context, String ImageName) {
+        //Toast.makeText(context, "" + bitmapImage.getWidth(), Toast.LENGTH_LONG).show();
+
         ContextWrapper cw = new ContextWrapper(context);
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
