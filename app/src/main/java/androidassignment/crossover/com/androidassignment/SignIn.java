@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +24,7 @@ public class SignIn extends Activity {
     DatabaseHelper db;
     SharedPreferences prefs;
     public static final String MyPREFERENCES = "MyPrefs";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,5 +76,22 @@ public class SignIn extends Activity {
                 startActivity(ForgotPass);
             }
         });
+    }
+
+    class AddTempItems extends AsyncTask<Void, Integer, String> {
+        protected void onPreExecute() {
+            Log.d("PreExceute", "On pre Exceute......");
+        }
+
+        protected String doInBackground(Void... arg0) {
+            Log.d("DoINBackGround", "On doInBackground...");
+
+
+            return "You are at PostExecute";
+        }
+
+        protected void onPostExecute(String result) {
+
+        }
     }
 }

@@ -34,7 +34,7 @@
                         android:orientation="vertical">
 
                         <EditText
-                            android:id="@+id/etUserName"
+                            android:id="@+id/et_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edittext_default_bg"
@@ -72,6 +72,7 @@
                             android:background="@drawable/image_frame" />
 
                         <ImageView
+                            android:id="@+id/iv_add_photo"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:scaleType="fitXY"
@@ -110,7 +111,7 @@
                     android:textColorHint="#bbbbbb" />
 
                 <EditText
-                    android:id="@+id/etPass"
+                    android:id="@+id/et_min_bid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_bottom_bg"
@@ -124,7 +125,7 @@
 
 
                 <EditText
-                    android:id="@+id/date_time"
+                    android:id="@+id/et_date_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_bottom_bg"
@@ -137,7 +138,7 @@
                     android:drawableLeft="@drawable/password" />
 
                 <EditText
-                    android:id="@+id/country"
+                    android:id="@+id/et_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -157,7 +158,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/btnSingIn"
+        android:id="@+id/btn_add_item"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
 

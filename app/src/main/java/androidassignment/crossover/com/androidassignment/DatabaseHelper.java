@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Logcat tag
@@ -36,7 +39,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String MIN_BID = "min_bid";
     private static final String END_DATE = "end_date";
     private static final String LOCATION = "location";
-    private static final String IMAGE_LOCATION = "image_location";
     private static final String USER_ID = "user_id";
 
     private static final String TABLE_BID_KEY_ID = "id";
@@ -56,9 +58,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_AUCTION_ITEM = "CREATE TABLE " + TABLE_AUCTION_ITEM
             + "(" + TABLE_AUCTION_ITEM_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + TITLE
             + " VARCHAR(80)," + CATEGORY + " VARCHAR(45)," + MIN_BID + " VARCHAR(45),"
-            + END_DATE + " VARCHAR(45)," + LOCATION + " VARCHAR(45),"
-            + IMAGE_LOCATION + " VARCHAR(45)," + USER_ID + " VARCHAR(45)," + DESCRIPTION
-            + " VARCHAR(45)" + ")";
+            + END_DATE + " DATETIME," + LOCATION + " VARCHAR(45),"
+            + USER_ID + " INTEGER," + DESCRIPTION
+            + " TEXT" + ")";
 
     private static final String CREATE_TABLE_BID = "CREATE TABLE " + TABLE_BID
             + "(" + TABLE_BID_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + TABLE_BID_USER_ID
@@ -107,7 +109,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public Boolean InsertAuctionItem(AuctionItem item) {
+    public int ImageIndex() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  MAX(" + TABLE_AUCTION_ITEM_KEY_ID + ") AS " + TABLE_AUCTION_ITEM_KEY_ID + "  FROM " + TABLE_USER + "';";
+
+        Cursor c = null;
+        int index = 0;
+        try {
+            c = db.rawQuery(selectQuery, null);
+            c.moveToFirst();
+            index = c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID));
+        } catch (Exception e) {
+        }
+
+        db.close();
+        return (index + 1);
+    }
+
+    public int InsertAuctionItem(AuctionItem item) {
 
 
         SQLiteDatabase database = this.getWritableDatabase();
@@ -119,15 +139,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(END_DATE, item.getEndDate());
         values.put(LOCATION, item.getLocation());
         values.put(USER_ID, item.getUserId());
-        values.put(IMAGE_LOCATION, item.getImageLoc());
 
 
         long temp = database.insert(TABLE_AUCTION_ITEM, null, values);
         database.close();
-        if (temp == -1)
-            return false;
-        else
-            return true;
+        return (int)temp;
 
     }
 
@@ -155,6 +171,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public int GetUserId(String UserName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  "+TABLE_USER_KEY_ID+" FROM " + TABLE_USER + " WHERE "
+                + USER_NAME + " = '" + UserName + "';";
+
+        Cursor c = null;
+        int index = 0;
+        try {
+            c = db.rawQuery(selectQuery, null);
+            c.moveToFirst();
+            index = c.getInt(c.getColumnIndex(TABLE_USER_KEY_ID));
+        } catch (Exception e) {
+        }
+        if (c != null)
+
+            db.close();
+        return index;
+    }
+
     public int ChangeUserPassword(String userName, String NewPassword) {
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -166,5 +202,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // updating row
         return db.update(TABLE_USER, values, USER_NAME + " = ?",
                 new String[]{String.valueOf(userName)});
+    }
+
+    public List<AuctionItem> getActiveAuctions() {
+        List<AuctionItem> Items = new ArrayList<AuctionItem>();
+        String selectQuery = "SELECT  * FROM " + TABLE_AUCTION_ITEM;
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                AuctionItem item = new AuctionItem();
+                item.setImageLoc(c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)));
+                item.setTitle((c.getString(c.getColumnIndex(TITLE))));
+                item.setCategory((c.getString(c.getColumnIndex(CATEGORY))));
+                item.setDescription((c.getString(c.getColumnIndex(DESCRIPTION))));
+                item.setMinBid((c.getString(c.getColumnIndex(MIN_BID))));
+                item.setEndDate((c.getString(c.getColumnIndex(END_DATE))));
+                item.setLocation((c.getString(c.getColumnIndex(LOCATION))));
+                item.setUserId((c.getInt(c.getColumnIndex(USER_ID))));
+
+                // adding to todo list
+                Items.add(item);
+            } while (c.moveToNext());
+        }
+
+        return Items;
     }
 }

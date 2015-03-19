@@ -4,24 +4,25 @@ package androidassignment.crossover.com.androidassignment;
  * Created by Sunny on 3/19/2015.
  */
 public class AuctionItem {
+
     private String Title;
     private String Category;
     private String Description;
     private String MinBid;
     private String EndDate;
     private String Location;
-    private String UserId;
+    private int UserId;
 
-    public String getUserId() {
+    public int getUserId() {
         return UserId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         UserId = userId;
     }
 
     void AuctionItem(String title, String category, String description, String minBid,
-                     String endDate, String location, String imageLoc, String userId) {
+                     String endDate, String location, int imageLoc, int userId) {
         this.setTitle(title);
         this.setCategory(category);
         this.setDescription(description);
@@ -32,11 +33,11 @@ public class AuctionItem {
         this.setUserId(userId);
     }
 
-    public String getImageLoc() {
+    public int getImageLoc() {
         return ImageLoc;
     }
 
-    public void setImageLoc(String imageLoc) {
+    public void setImageLoc(int imageLoc) {
         ImageLoc = imageLoc;
     }
 
@@ -88,6 +89,6 @@ public class AuctionItem {
         Location = location;
     }
 
-    String ImageLoc;
+    private int ImageLoc;
 
 }
