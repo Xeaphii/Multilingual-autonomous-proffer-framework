@@ -23,6 +23,8 @@ public class SoldAuctionsAdapter extends ArrayAdapter<AuctionItem> {
     private List<AuctionItem> ActiveAuctions;
     private static String ITEM_ID = "item_id";
     DatabaseHelper db;
+    private final static String AUCTION_ITEM_ID = "auctioned_item_id";
+    private final static String AUCTION_ITEM_TITLE = "auctioned_item_title";
 
     public SoldAuctionsAdapter(Activity context, List<AuctionItem> activeAuctions) {
         super(context, R.layout.auction_item_row_sold, activeAuctions);
@@ -73,6 +75,9 @@ public class SoldAuctionsAdapter extends ArrayAdapter<AuctionItem> {
                                 if (arg0.getItemId() == R.id.action_history) {
                                     //do something
                                     Intent HistoryIntent = new Intent(context, AuctionedHistory.class);
+                                    HistoryIntent.putExtra(AUCTION_ITEM_ID, Integer.toString(
+                                            ActiveAuctions.get(position).getImageLoc()));
+                                    HistoryIntent.putExtra(AUCTION_ITEM_TITLE,ActiveAuctions.get(position).getTitle());
                                     context.startActivity(HistoryIntent);
                                 }
 

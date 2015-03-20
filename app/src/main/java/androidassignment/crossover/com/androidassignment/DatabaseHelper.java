@@ -28,13 +28,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_AUCTION_ITEM = "tb_auction_items";
     private static final String TABLE_BID = "tb_bid";
 
-    // Common column names
+    //  column names
     private static final String TABLE_USER_KEY_ID = "id";
     private static final String USER_NAME = "user_name";
     private static final String HASHED_PASSWORD = "hashed_password";
     private static final String EMAIL = "email";
 
-    // NOTES Table - column nmaes
+    //  Table - column nmaes
     private static final String TABLE_AUCTION_ITEM_KEY_ID = "id";
     private static final String TITLE = "title";
     private static final String CATEGORY = "category";
@@ -513,5 +513,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
         }
         return UserId;
+    }
+
+    public List<AuctionHistoryPojo> GetHistoryBids(String id) {
+        List<AuctionHistoryPojo> history = new ArrayList<AuctionHistoryPojo>();
+        String selectQuery = "SELECT  * FROM " + TABLE_BID + "" +
+                " WHERE " + TABLE_BID_AUCTION_ITEM_ID +
+                " = " +
+                id +
+                ";";
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor temp = null;
+        String tempString = "";
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                AuctionHistoryPojo item = new AuctionHistoryPojo();
+                tempString = "SELECT  " +
+                        USER_NAME +
+                        " FROM " +
+                        TABLE_USER + " WHERE " + TABLE_USER_KEY_ID + " = "
+                        + (c.getString(c.getColumnIndex(TABLE_BID_USER_ID))) + ";";
+
+                temp = db.rawQuery(tempString, null);
+                if (temp.moveToFirst()) {
+                    item.setUserName(temp.getString(0));
+                }else{
+                    item.setUserName("Not Mentioned");
+                }
+                item.setBidAmount((c.getString(c.getColumnIndex(TABLE_BID_AMOUNT))));
+
+                history.add(item);
+
+
+            } while (c.moveToNext());
+        }
+
+        return history;
     }
 }

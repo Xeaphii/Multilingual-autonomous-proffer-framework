@@ -45,9 +45,6 @@
         <activity
             android:name=".AuctionedHistory"
             android:label="@string/auctioned_history_title"></activity>
-        <activity
-            android:name=".DateTimePickerActivity"
-            android:label="@string/auctioned_history_title"></activity>
     </application>
 
 </manifest>
