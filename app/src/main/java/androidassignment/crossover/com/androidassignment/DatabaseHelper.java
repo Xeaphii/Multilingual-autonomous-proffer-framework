@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_BID_KEY_ID = "id";
     private static final String TABLE_BID_USER_ID = "user_id";
     private static final String TABLE_BID_AUCTION_ITEM_ID = "auction_item_id";
-    private static final String AMOUNT = "amount";
+    private static final String TABLE_BID_AMOUNT = "amount";
 
 
     // Table Create Statements
@@ -64,7 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_BID = "CREATE TABLE " + TABLE_BID
             + "(" + TABLE_BID_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + TABLE_BID_USER_ID
-            + " INTEGER," + TABLE_BID_AUCTION_ITEM_ID + " INTEGER," + AMOUNT + " VARCHAR(45)"
+            + " INTEGER," + TABLE_BID_AUCTION_ITEM_ID + " INTEGER," + TABLE_BID_AMOUNT + " VARCHAR(45)"
             + ")";
 
 
@@ -428,5 +428,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(key)});
         db.close();
 
+    }
+
+    public Boolean InsertBid(int userId, int ItemId, String Price) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TABLE_BID_USER_ID, userId);
+        values.put(TABLE_BID_AUCTION_ITEM_ID, ItemId);
+        values.put(TABLE_BID_AMOUNT, Price);
+
+        long temp = database.insert(TABLE_BID, null, values);
+        database.close();
+        if (temp == -1)
+            return false;
+        else
+            return true;
     }
 }

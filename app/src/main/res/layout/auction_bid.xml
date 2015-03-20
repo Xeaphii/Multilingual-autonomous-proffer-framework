@@ -152,7 +152,7 @@
                     <Button
                         android:layout_marginTop="20dp"
                         android:layout_alignParentBottom="true"
-                        android:id="@+id/btn_add_item"
+                        android:id="@+id/btn_place_bid"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
