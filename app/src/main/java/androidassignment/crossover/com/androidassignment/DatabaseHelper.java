@@ -56,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //  table create statement
     private static final String CREATE_TABLE_USER = "CREATE TABLE "
             + TABLE_USER + "(" + TABLE_USER_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + USER_NAME
-            + " VARCHAR(45)," + HASHED_PASSWORD + " VARCHAR(256)," + EMAIL
+            + " VARCHAR(45) UNIQUE," + HASHED_PASSWORD + " VARCHAR(256)," + EMAIL
             + " VARCHAR(50)" + ")";
 
     // Tag table create statement

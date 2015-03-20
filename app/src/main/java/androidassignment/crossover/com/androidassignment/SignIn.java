@@ -50,15 +50,27 @@ public class SignIn extends Activity {
         LoginUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (db.VerifyUser(new UserProfile(UserName.getText().toString(), Password.getHash(password.getText().toString())))) {
-                    prefs.edit().putString("is_initialized", "1").commit();
-                    prefs.edit().putString("user_name", UserName.getText().toString()).commit();
-                    Intent signUp = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(signUp);
-                    finish();
+                if (UserName.getText().toString().trim().length() > 5) {
+                    if (password.getText().toString().trim().length() > 5) {
+                        if (db.VerifyUser(new UserProfile(
+                                UserName.getText().toString().trim(),
+                                Password.getHash(password.getText().toString().trim())))) {
+                            prefs.edit().putString("is_initialized", "1").commit();
+                            prefs.edit().putString("user_name", UserName.getText().toString()).commit();
+                            Intent signUp = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(signUp);
+                            finish();
+                        } else {
+                            ShowToast("Wrong Password or UserName");
+                        }
+                    } else {
+                        ShowToast("Password should be greater than 5 length.");
+                    }
+
                 } else {
-                    Toast.makeText(getApplicationContext(), "Wrong Password or UserName", Toast.LENGTH_SHORT).show();
+                    ShowToast("Username should be greater than 5 length.");
                 }
+
             }
         });
 
@@ -93,5 +105,9 @@ public class SignIn extends Activity {
         protected void onPostExecute(String result) {
 
         }
+    }
+
+    private void ShowToast(String input) {
+        Toast.makeText(getApplicationContext(), input, Toast.LENGTH_SHORT).show();
     }
 }

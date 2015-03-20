@@ -25,6 +25,7 @@
             android:background="@drawable/edittext_top_bg"
             android:padding="10dp"
             android:hint="Email"
+            android:inputType="textEmailAddress"
             android:textColorHint="#bbbbbb"
             android:drawableLeft="@drawable/email" />
 

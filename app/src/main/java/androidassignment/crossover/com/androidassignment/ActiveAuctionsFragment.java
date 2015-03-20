@@ -159,7 +159,7 @@ public class ActiveAuctionsFragment extends Fragment {
 
             default:
                 return super.onOptionsItemSelected(item);
-        }x
+        }
     }
 
 

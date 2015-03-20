@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by Sunny on 3/19/2015.
  */
@@ -20,7 +23,7 @@ public class SignUp extends Activity {
     Button SignUpUser;
     DatabaseHelper db;
     SharedPreferences prefs;
-    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String MyPREFERENCES = "MyPrefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +44,38 @@ public class SignUp extends Activity {
         SignUpUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean check = false;
+                if (isEmailValid(email.getText().toString())) {
+                    if (UserName.getText().toString().trim().length() > 5) {
+                        if (password.getText().toString().trim().length() > 5) {
+                            Boolean check = false;
 
-                check = db.InsertUser(new UserProfile(email.getText().toString(), UserName.getText().toString(), Password.getHash(password.getText().toString())));
+                            check = db.InsertUser(new UserProfile(
+                                    email.getText().toString(),
+                                    UserName.getText().toString().trim(),
+                                    Password.getHash(password.getText().toString().trim())));
 
-                if (check) {
-                    prefs.edit().putString("is_initialized", "1").commit();
-                    prefs.edit().putString("user_name", UserName.getText().toString()).commit();
-                    Intent signUp = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(signUp);
-                    finish();
+                            if (check) {
+                                prefs.edit().putString("is_initialized", "1").commit();
+                                prefs.edit().putString("user_name", UserName.getText().toString()).commit();
+                                Intent signUp = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(signUp);
+                                finish();
+                            } else {
+                                ShowToast("UserName already exist.");
+                            }
+                        } else {
+                            ShowToast("Password should be greater than 5 length.");
+                        }
+
+                    } else {
+                        ShowToast("Username should be greater than 5 length.");
+                    }
+
                 } else {
-                    Toast.makeText(getApplicationContext(), "Wrong Password or UserName", Toast.LENGTH_SHORT).show();
+                    ShowToast("Wrong email address.");
+
                 }
+
             }
         });
 
@@ -65,5 +87,23 @@ public class SignUp extends Activity {
             }
         });
 
+    }
+
+    public static boolean isEmailValid(String email) {
+        boolean isValid = false;
+
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
+        }
+        return isValid;
+    }
+
+    private void ShowToast(String input) {
+        Toast.makeText(getApplicationContext(), input, Toast.LENGTH_SHORT).show();
     }
 }
