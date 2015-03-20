@@ -34,6 +34,7 @@ public class PlaceBid extends Activity {
         if (extras != null) {
             key = extras.getString(ITEM_ID);
         }
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         db = new DatabaseHelper(getApplicationContext());
         Title = (EditText) findViewById(R.id.et_title);
         Category = (EditText) findViewById(R.id.et_category);

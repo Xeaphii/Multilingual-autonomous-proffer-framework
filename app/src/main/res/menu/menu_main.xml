@@ -14,4 +14,9 @@
         android:id="@+id/action_change_password"
         android:title="@string/change_password"
         android:showAsAction="never" />
+    <item
+        android:id="@+id/action_refresh"
+        android:title="@string/refresh"
+        android:icon="@drawable/ic_action"
+        android:showAsAction="ifRoom" />
 </menu>

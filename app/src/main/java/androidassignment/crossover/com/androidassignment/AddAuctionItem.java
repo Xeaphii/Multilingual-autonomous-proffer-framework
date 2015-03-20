@@ -49,6 +49,7 @@ public class AddAuctionItem extends Activity {
         EndDate = (EditText) findViewById(R.id.et_date_time);
         AddItem = (Button) findViewById(R.id.btn_add_item);
         AddPhoto = (ImageView) findViewById(R.id.iv_add_photo);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         TimePicker timepicker = (TimePicker) View.inflate(AddAuctionItem.this, R.layout.date_time_picker, null).findViewById(R.id.time_picker);
         timepicker.setIs24HourView(true);
         timepicker.setCurrentHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));

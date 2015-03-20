@@ -39,6 +39,7 @@ public class EditAuctionItem extends Activity {
         }
         db = new DatabaseHelper(getApplicationContext());
         Title = (EditText) findViewById(R.id.et_title);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         Category = (EditText) findViewById(R.id.et_category);
         Description = (EditText) findViewById(R.id.et_descp);
         MinBid = (EditText) findViewById(R.id.et_min_bid);

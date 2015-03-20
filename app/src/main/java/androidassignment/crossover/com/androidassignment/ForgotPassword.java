@@ -11,5 +11,6 @@ public class ForgotPassword extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgot_password);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

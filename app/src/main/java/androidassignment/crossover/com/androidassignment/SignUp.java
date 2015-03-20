@@ -34,6 +34,7 @@ public class SignUp extends Activity {
         db = new DatabaseHelper(getApplicationContext());
         loginIn = (TextView) findViewById(R.id.sign_up);
         UserName = (EditText) findViewById(R.id.etUserName);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         password = (EditText) findViewById(R.id.etPass);
         email = (EditText) findViewById(R.id.etEmail);
         SignUpUser = (Button) findViewById(R.id.btnSingUp);

@@ -28,7 +28,7 @@ public class ChangePassword extends Activity {
         prefs = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         OldPassword = (EditText) findViewById(R.id.et_old_pass);
-
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         NewPassword = (EditText) findViewById(R.id.et_pass);
         changePassword = (Button) findViewById(R.id.bt_change_password);
         changePassword.setOnClickListener(new View.OnClickListener() {

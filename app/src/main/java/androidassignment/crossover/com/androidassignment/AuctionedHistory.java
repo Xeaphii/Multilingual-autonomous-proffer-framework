@@ -26,6 +26,7 @@ public class AuctionedHistory extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auctioned_history);
         Bundle extras = getIntent().getExtras();
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         db = new DatabaseHelper(getApplicationContext());
         ItemTitle = (TextView) findViewById(R.id.auction_item_title);
         if (extras != null) {
