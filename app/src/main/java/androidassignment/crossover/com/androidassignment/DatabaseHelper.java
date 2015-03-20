@@ -403,4 +403,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return price;
     }
+
+    public int UpdateAuctionItem(String key, AuctionItem item) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        ContentValues values = new ContentValues();
+        values.put(TITLE, item.getTitle());
+        values.put(CATEGORY, item.getCategory());
+        values.put(DESCRIPTION, item.getDescription());
+        values.put(MIN_BID, item.getMinBid());
+        values.put(END_DATE, item.getEndDate());
+        values.put(LOCATION, item.getLocation());
+
+        // updating row
+        return db.update(TABLE_AUCTION_ITEM, values, TABLE_AUCTION_ITEM_KEY_ID + " = ?",
+                new String[]{String.valueOf(key)});
+    }
 }
