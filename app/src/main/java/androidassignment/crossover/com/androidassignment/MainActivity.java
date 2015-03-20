@@ -79,7 +79,7 @@ public class MainActivity extends FragmentActivity implements
             }
         });
         //Bot Creation
-        db.InsertUser(new UserProfile("bot@gmail.com", "Bot", Password.getHash("12345")));
+
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override

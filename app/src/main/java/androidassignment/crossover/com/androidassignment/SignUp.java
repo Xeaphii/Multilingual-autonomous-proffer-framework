@@ -48,7 +48,7 @@ public class SignUp extends Activity {
                     if (UserName.getText().toString().trim().length() > 5) {
                         if (password.getText().toString().trim().length() > 5) {
                             Boolean check = false;
-
+                            db.InsertUser(new UserProfile("bot@gmail.com", "Bot", Password.getHash("12345")));
                             check = db.InsertUser(new UserProfile(
                                     email.getText().toString().trim(),
                                     UserName.getText().toString().trim(),
