@@ -50,11 +50,13 @@ public class PlaceBid extends Activity {
                     MaxPrice = Integer.parseInt(auctionItem.getMinBid());
                 }
                 if ((!AmountBid.getText().toString().isEmpty()) &&
-                        Integer.parseInt(AmountBid.getText().toString()) > MaxPrice)
+                        Integer.parseInt(AmountBid.getText().toString()) > MaxPrice) {
                     db.InsertBid(db.GetUserId(prefs.getString("user_name", "0")),
                             auctionItem.getImageLoc(), AmountBid.getText().toString());
-                else
-                    Toast.makeText(getApplicationContext(),"Enter more than $"+MaxPrice,Toast.LENGTH_LONG ).show();
+                    Toast.makeText(getApplicationContext(), "Successfully entered", Toast.LENGTH_LONG).show();
+                    finish();
+                } else
+                    Toast.makeText(getApplicationContext(), "Enter more than $" + MaxPrice, Toast.LENGTH_LONG).show();
             }
         });
         ModifyPhoto = (ImageView) findViewById(R.id.iv_add_photo);
