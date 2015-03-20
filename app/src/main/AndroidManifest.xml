@@ -42,7 +42,9 @@
         <activity
             android:name=".ChangePassword"
             android:label="@string/change_password"></activity>
-
+        <activity
+            android:name=".AuctionedHistory"
+            android:label="@string/auctioned_history_title"></activity>
     </application>
 
 </manifest>

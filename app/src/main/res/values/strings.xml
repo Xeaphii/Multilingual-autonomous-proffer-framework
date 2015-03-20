@@ -42,4 +42,5 @@
     <string name="change_password">Change Password</string>
     <string name="log_out">Logout</string>
     <string name="account">Account</string>
+    <string name="auctioned_history_title">History</string>
 </resources>

@@ -14,7 +14,7 @@ import java.util.List;
 public class WonAuctionsFragment extends Fragment {
     DatabaseHelper db;
     private List<AuctionItem> WonAuctions;
-    AuctionsAdapter adapter;
+    SoldAuctionsAdapter adapter;
     ListView lv;
     CacheData cacheData;
 
@@ -47,7 +47,7 @@ public class WonAuctionsFragment extends Fragment {
 
 
         protected void onPostExecute(String result) {
-            adapter = new AuctionsAdapter(getActivity(), WonAuctions);
+            adapter = new SoldAuctionsAdapter(getActivity(), WonAuctions);
             lv.setAdapter(adapter);
 
             /*lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
