@@ -1,5 +1,7 @@
 package androidassignment.crossover.com.androidassignment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,11 +19,14 @@ public class WonAuctionsFragment extends Fragment {
     SoldAuctionsAdapter adapter;
     ListView lv;
     CacheData cacheData;
+    SharedPreferences prefs;
+    public static final String MyPREFERENCES = "MyPrefs";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         WonAuctions = new ArrayList<AuctionItem>();
+        prefs = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         db = new DatabaseHelper(getActivity());
         cacheData = new CacheData();
         View rootView = inflater.inflate(R.layout.fragment_won_auctions, container, false);
@@ -29,6 +34,7 @@ public class WonAuctionsFragment extends Fragment {
         new GetWonAuctions().execute();
         return rootView;
     }
+
     class GetWonAuctions extends AsyncTask<Void, Integer, String> {
 
 
@@ -39,7 +45,8 @@ public class WonAuctionsFragment extends Fragment {
             if (cacheData.isWonDataPresent()) {
                 WonAuctions = cacheData.getWonAuctions();
             } else {
-                WonAuctions = db.getWonAuctions();
+
+                WonAuctions = db.getWonAuctions(db.GetUserId(prefs.getString("user_name", "")));
                 cacheData.setWonAuctions(WonAuctions);
             }
             return "";
@@ -59,6 +66,7 @@ public class WonAuctionsFragment extends Fragment {
             });*/
         }
     }
+
     class RefreshItems extends AsyncTask<Void, Integer, String> {
 
 
@@ -67,7 +75,7 @@ public class WonAuctionsFragment extends Fragment {
 
         protected String doInBackground(Void... arg0) {
             WonAuctions.clear();
-            WonAuctions.addAll(db.getWonAuctions());
+            WonAuctions.addAll(db.getWonAuctions(db.GetUserId(prefs.getString("user_name", ""))));
             return "";
         }
 

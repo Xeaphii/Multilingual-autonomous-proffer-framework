@@ -262,10 +262,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return Items;
     }
 
-    public List<AuctionItem> getWonAuctions() {
+    public List<AuctionItem> getWonAuctions(int UserId) {
         List<AuctionItem> Items = new ArrayList<AuctionItem>();
         String selectQuery = "SELECT  * FROM " + TABLE_AUCTION_ITEM + ";";
-
+        /*String selectQuery = "SELECT  * FROM " + TABLE_AUCTION_ITEM + "" +
+                " WHERE " +
+                USER_ID +
+                " = " +
+                UserId +
+                ";";*/
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
@@ -277,36 +282,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c.moveToFirst()) {
             do {
                 if (!CompareDates(c.getString(c.getColumnIndex(END_DATE)), currentDateandTime)) {
-                    AuctionItem item = new AuctionItem();
-                    item.setImageLoc(c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)));
-                    item.setTitle((c.getString(c.getColumnIndex(TITLE))));
-                    item.setCategory((c.getString(c.getColumnIndex(CATEGORY))));
-                    item.setDescription((c.getString(c.getColumnIndex(DESCRIPTION))));
-                    item.setMinBid((c.getString(c.getColumnIndex(MIN_BID))));
-                    item.setEndDate((c.getString(c.getColumnIndex(END_DATE))));
-                    item.setLocation((c.getString(c.getColumnIndex(LOCATION))));
-                    item.setUserId((c.getInt(c.getColumnIndex(USER_ID))));
-                    tempString = "SELECT  count(*) as CountBid,max(amount) as MaxBid FROM " +
-                            TABLE_BID + " WHERE " + TABLE_BID_AUCTION_ITEM_ID + " = "
-                            + c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)) + ";";
-                    temp = db.rawQuery(tempString, null);
-                    // adding to  list
+                    int MaxUserId = getMaxBidUserId(c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)));
+                    if (MaxUserId != -1 &&
+                            MaxUserId == UserId) {
+                        AuctionItem item = new AuctionItem();
+                        item.setImageLoc(c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)));
+                        item.setTitle((c.getString(c.getColumnIndex(TITLE))));
+                        item.setCategory((c.getString(c.getColumnIndex(CATEGORY))));
+                        item.setDescription((c.getString(c.getColumnIndex(DESCRIPTION))));
+                        item.setMinBid((c.getString(c.getColumnIndex(MIN_BID))));
+                        item.setEndDate((c.getString(c.getColumnIndex(END_DATE))));
+                        item.setLocation((c.getString(c.getColumnIndex(LOCATION))));
+                        item.setUserId((c.getInt(c.getColumnIndex(USER_ID))));
+                        tempString = "SELECT  count(*) as CountBid,max(amount) as MaxBid FROM " +
+                                TABLE_BID + " WHERE " + TABLE_BID_AUCTION_ITEM_ID + " = "
+                                + c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)) + ";";
+                        temp = db.rawQuery(tempString, null);
+                        // adding to  list
 
-                    if (temp.moveToFirst()) {
+                        if (temp.moveToFirst()) {
 
-                        if (temp.getInt(0) != 0) {
-                            item.setCount(temp.getInt(0));
-                            item.setMaxBid(temp.getInt(1));
+                            if (temp.getInt(0) != 0) {
+                                item.setCount(temp.getInt(0));
+                                item.setMaxBid(temp.getInt(1));
 
+                            } else {
+                                item.setMaxBid(0);
+                                item.setCount(0);
+                            }
                         } else {
                             item.setMaxBid(0);
                             item.setCount(0);
                         }
-                    } else {
-                        item.setMaxBid(0);
-                        item.setCount(0);
+                        Items.add(item);
                     }
-                    Items.add(item);
                 }
             } while (c.moveToNext());
 
@@ -315,7 +324,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return Items;
     }
 
-    public List<AuctionItem> getLostAuctions() {
+    public List<AuctionItem> getLostAuctions(int UserId) {
         List<AuctionItem> Items = new ArrayList<AuctionItem>();
         String selectQuery = "SELECT  * FROM " + TABLE_AUCTION_ITEM + ";";
 
@@ -330,36 +339,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c.moveToFirst()) {
             do {
                 if (!CompareDates(c.getString(c.getColumnIndex(END_DATE)), currentDateandTime)) {
-                    AuctionItem item = new AuctionItem();
-                    item.setImageLoc(c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)));
-                    item.setTitle((c.getString(c.getColumnIndex(TITLE))));
-                    item.setCategory((c.getString(c.getColumnIndex(CATEGORY))));
-                    item.setDescription((c.getString(c.getColumnIndex(DESCRIPTION))));
-                    item.setMinBid((c.getString(c.getColumnIndex(MIN_BID))));
-                    item.setEndDate((c.getString(c.getColumnIndex(END_DATE))));
-                    item.setLocation((c.getString(c.getColumnIndex(LOCATION))));
-                    item.setUserId((c.getInt(c.getColumnIndex(USER_ID))));
-                    tempString = "SELECT  count(*) as CountBid,max(amount) as MaxBid FROM " +
-                            TABLE_BID + " WHERE " + TABLE_BID_AUCTION_ITEM_ID + " = "
-                            + c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)) + ";";
-                    temp = db.rawQuery(tempString, null);
-                    // adding to  list
+                    int MaxUserId = getMaxBidUserId(c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)));
+                    if (MaxUserId != -1 &&
+                            MaxUserId != UserId) {
+                        AuctionItem item = new AuctionItem();
+                        item.setImageLoc(c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)));
+                        item.setTitle((c.getString(c.getColumnIndex(TITLE))));
+                        item.setCategory((c.getString(c.getColumnIndex(CATEGORY))));
+                        item.setDescription((c.getString(c.getColumnIndex(DESCRIPTION))));
+                        item.setMinBid((c.getString(c.getColumnIndex(MIN_BID))));
+                        item.setEndDate((c.getString(c.getColumnIndex(END_DATE))));
+                        item.setLocation((c.getString(c.getColumnIndex(LOCATION))));
+                        item.setUserId((c.getInt(c.getColumnIndex(USER_ID))));
+                        tempString = "SELECT  count(*) as CountBid,max(amount) as MaxBid FROM " +
+                                TABLE_BID + " WHERE " + TABLE_BID_AUCTION_ITEM_ID + " = "
+                                + c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)) + ";";
+                        temp = db.rawQuery(tempString, null);
+                        // adding to  list
 
-                    if (temp.moveToFirst()) {
+                        if (temp.moveToFirst()) {
 
-                        if (temp.getInt(0) != 0) {
-                            item.setCount(temp.getInt(0));
-                            item.setMaxBid(temp.getInt(1));
+                            if (temp.getInt(0) != 0) {
+                                item.setCount(temp.getInt(0));
+                                item.setMaxBid(temp.getInt(1));
 
+                            } else {
+                                item.setMaxBid(0);
+                                item.setCount(0);
+                            }
                         } else {
                             item.setMaxBid(0);
                             item.setCount(0);
                         }
-                    } else {
-                        item.setMaxBid(0);
-                        item.setCount(0);
+                        Items.add(item);
                     }
-                    Items.add(item);
                 }
             } while (c.moveToNext());
         }
@@ -478,5 +491,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else {
             return false;
         }
+    }
+
+    public int getMaxBidUserId(int key) {
+        int UserId = -1;
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        String query = "SELECT  max(amount)," + TABLE_BID_USER_ID + "  FROM " +
+                TABLE_BID + " WHERE " + TABLE_BID_AUCTION_ITEM_ID + " = "
+                + key + ";";
+        Cursor c = db.rawQuery(query, null);
+
+        try {
+            if (c.moveToFirst()) {
+                if (c.getInt(0) != 0) {
+                    UserId = c.getInt(1);
+                }
+            }
+        } catch (Exception e) {
+        }
+        return UserId;
     }
 }

@@ -1,5 +1,7 @@
 package androidassignment.crossover.com.androidassignment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,11 +19,14 @@ public class LostAuctionsFragment extends Fragment {
     SoldAuctionsAdapter adapter;
     ListView lv;
     CacheData cacheData;
+    SharedPreferences prefs;
+    public static final String MyPREFERENCES = "MyPrefs";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         LostAuctions = new ArrayList<AuctionItem>();
+        prefs = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         db = new DatabaseHelper(getActivity());
         cacheData = new CacheData();
         View rootView = inflater.inflate(R.layout.fragment_lost_auctions, container, false);
@@ -39,7 +44,7 @@ public class LostAuctionsFragment extends Fragment {
             if (cacheData.isLostDataPresent()) {
                 LostAuctions = cacheData.getLostAuctions();
             } else {
-                LostAuctions = db.getLostAuctions();
+                LostAuctions = db.getLostAuctions(db.GetUserId(prefs.getString("user_name", "")));
                 cacheData.setLostAuctions(LostAuctions);
             }
             return "";
@@ -67,7 +72,7 @@ public class LostAuctionsFragment extends Fragment {
 
         protected String doInBackground(Void... arg0) {
             LostAuctions.clear();
-           LostAuctions.addAll(db.getLostAuctions());
+           LostAuctions.addAll(db.getLostAuctions(db.GetUserId(prefs.getString("user_name", ""))));
             return "";
         }
 
