@@ -1,14 +1,17 @@
 package androidassignment.crossover.com.androidassignment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 /**
@@ -41,6 +44,21 @@ public class EditAuctionItem extends Activity {
         MinBid = (EditText) findViewById(R.id.et_min_bid);
         Location = (EditText) findViewById(R.id.et_location);
         EndDate = (EditText) findViewById(R.id.et_date_time);
+        EndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowDateTimePicker();
+            }
+        });
+
+        EndDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    ShowDateTimePicker();
+                }
+            }
+        });
         AddItem = (Button) findViewById(R.id.btn_add_item);
         ModifyPhoto = (ImageView) findViewById(R.id.iv_add_photo);
         ModifyPhoto.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +79,7 @@ public class EditAuctionItem extends Activity {
                 item.setMinBid(MinBid.getText().toString());
                 item.setLocation(Location.getText().toString());
                 item.setEndDate(EndDate.getText().toString());
-                int result = db.UpdateAuctionItem(key,item);
+                int result = db.UpdateAuctionItem(key, item);
                 if (result == -1)
                     Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_LONG).show();
                 else {
@@ -107,5 +125,31 @@ public class EditAuctionItem extends Activity {
             ImageResult = ImageManup.getResizedBitmap((Bitmap) data.getExtras().get("data"), 120, 120);
             ModifyPhoto.setImageBitmap(ImageResult);
         }
+    }
+    private void ShowDateTimePicker() {
+        final View dialogView = View.inflate(EditAuctionItem.this, R.layout.date_time_picker, null);
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(EditAuctionItem.this).create();
+
+        dialogView.findViewById(R.id.date_time_set).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
+                TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+
+
+                String DateTime = datePicker.getYear() + "-" +
+                        (datePicker.getMonth() + 1) + "-" +
+                        datePicker.getDayOfMonth() + " " +
+                        timePicker.getCurrentHour() + ":" +
+                        timePicker.getCurrentMinute() + ":00";
+
+
+                EndDate.setText(DateTime);
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.setView(dialogView);
+        alertDialog.show();
     }
 }

@@ -1,29 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="8dp"
     android:layout_height="match_parent">
 
-    <DatePicker
-        android:id="@+id/date_picker"
-        android:layout_width="match_parent"
-        android:calendarViewShown="true"
-        android:spinnersShown="false"
-        android:layout_weight="4"
-        android:layout_height="0dp" />
 
-    <TimePicker
-        android:id="@+id/time_picker"
-        android:layout_weight="4"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:fillViewport="true"
+        android:layout_height="fill_parent">
 
-    <Button
-        android:id="@+id/date_time_set"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:text="Set"
-        android:layout_height="0dp" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-</LinearLayout>
+            <LinearLayout
+                android:id="@+id/log_in_layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp">
+
+
+                <DatePicker
+                    android:id="@+id/date_picker"
+                    android:layout_width="match_parent"
+                    android:calendarViewShown="true"
+                    android:spinnersShown="false"
+                    android:layout_height="wrap_content" />
+
+                <TimePicker
+                    android:id="@+id/time_picker"
+                    android:layout_width="match_parent"
+                    android:addStatesFromChildren="true"
+                    android:layout_height="wrap_content" />
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent">
+
+                    <Button
+                        android:layout_marginTop="20dp"
+                        android:layout_alignParentBottom="true"
+                        android:id="@+id/date_time_set"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="Set"
+                        style="@style/DefaultButtonText"
+                        android:background="@drawable/button_default_bg" />
+                </RelativeLayout>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>
+
+

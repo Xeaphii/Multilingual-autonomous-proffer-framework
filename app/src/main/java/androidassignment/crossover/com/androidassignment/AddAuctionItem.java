@@ -15,9 +15,7 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * Created by Sunny on 3/18/2015.
@@ -51,71 +49,21 @@ public class AddAuctionItem extends Activity {
         EndDate = (EditText) findViewById(R.id.et_date_time);
         AddItem = (Button) findViewById(R.id.btn_add_item);
         AddPhoto = (ImageView) findViewById(R.id.iv_add_photo);
-        /*EndDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final View dialogView = View.inflate(getApplicationContext(), R.layout.date_time_picker, null);
-                final AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
-
-                dialogView.findViewById(R.id.date_time_set).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
-                        TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
-
-                        Calendar calendar = new GregorianCalendar(datePicker.getYear(),
-                                datePicker.getMonth(),
-                                datePicker.getDayOfMonth(),
-                                timePicker.getCurrentHour(),
-                                timePicker.getCurrentMinute());
-
-                        EndDate.setText(getDate(calendar.getTimeInMillis(),"yyyy-MM-dd hh:mm:ss"));
-                        alertDialog.dismiss();
-                    }});
-                alertDialog.setView(dialogView);
-                alertDialog.show();
-            }
-        });*/
         TimePicker timepicker = (TimePicker) View.inflate(AddAuctionItem.this, R.layout.date_time_picker, null).findViewById(R.id.time_picker);
         timepicker.setIs24HourView(true);
         timepicker.setCurrentHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+        EndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowDateTimePicker();
+            }
+        });
+
         EndDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    final View dialogView = View.inflate(AddAuctionItem.this, R.layout.date_time_picker, null);
-
-                    final AlertDialog alertDialog = new AlertDialog.Builder(AddAuctionItem.this).create();
-
-                    dialogView.findViewById(R.id.date_time_set).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            final int[] Hour = new int[1];
-                            final View dialogView = View.inflate(AddAuctionItem.this, R.layout.date_time_picker, null);
-                            TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
-                            DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
-                            timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-                                @Override
-                                public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                                    Hour[0] = hourOfDay;
-                                }
-                            });
-
-                            Calendar calendar = new GregorianCalendar(datePicker.getYear(),
-                                    datePicker.getMonth(),
-                                    datePicker.getDayOfMonth(),
-                                    ((Hour[0]) < 12 ? timePicker.getCurrentHour() : Hour[0] + timePicker.getCurrentHour())
-                                    ,
-                                    timePicker.getCurrentMinute());
-
-
-                            EndDate.setText(getDate(calendar.getTimeInMillis(), "yyyy-MM-dd hh:mm:ss"));
-                            alertDialog.dismiss();
-                        }
-                    });
-                    alertDialog.setView(dialogView);
-                    alertDialog.show();
+                    ShowDateTimePicker();
                 }
             }
         });
@@ -157,13 +105,30 @@ public class AddAuctionItem extends Activity {
         }
     }
 
-    public static String getDate(long milliSeconds, String dateFormat) {
-        // Create a DateFormatter object for displaying date in specified format.
-        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+    private void ShowDateTimePicker() {
+        final View dialogView = View.inflate(AddAuctionItem.this, R.layout.date_time_picker, null);
 
-        // Create a calendar object that will convert the date and time value in milliseconds to date.
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(milliSeconds);
-        return formatter.format(calendar.getTime());
+        final AlertDialog alertDialog = new AlertDialog.Builder(AddAuctionItem.this).create();
+
+        dialogView.findViewById(R.id.date_time_set).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
+                TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+
+
+                String DateTime = datePicker.getYear() + "-" +
+                        (datePicker.getMonth() + 1) + "-" +
+                        datePicker.getDayOfMonth() + " " +
+                        timePicker.getCurrentHour() + ":" +
+                        timePicker.getCurrentMinute() + ":00";
+
+
+                EndDate.setText(DateTime);
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.setView(dialogView);
+        alertDialog.show();
     }
 }
