@@ -44,13 +44,13 @@ public class SignUp extends Activity {
         SignUpUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isEmailValid(email.getText().toString())) {
+                if (isEmailValid(email.getText().toString().trim())) {
                     if (UserName.getText().toString().trim().length() > 5) {
                         if (password.getText().toString().trim().length() > 5) {
                             Boolean check = false;
 
                             check = db.InsertUser(new UserProfile(
-                                    email.getText().toString(),
+                                    email.getText().toString().trim(),
                                     UserName.getText().toString().trim(),
                                     Password.getHash(password.getText().toString().trim())));
 

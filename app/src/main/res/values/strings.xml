@@ -44,4 +44,7 @@
     <string name="account">Account</string>
     <string name="auctioned_history_title">History</string>
     <string name="refresh">Refresh</string>
+    <string name="retrieve">Retrieve</string>
+    <string name="lost_password">Enter email and username</string>
+    <string name="new_password">Enter new password</string>
 </resources>

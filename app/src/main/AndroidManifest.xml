@@ -9,22 +9,28 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        
         android:theme="@style/AppTheme">
         <activity
+            android:screenOrientation="portrait"
             android:name=".MainActivity"
             android:label="@string/app_name">
 
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".AddAuctionItem"
             android:label="@string/add_auction_item"></activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".PlaceBid"
             android:label="@string/place_bid"></activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".EditAuctionItem"
             android:label="@string/modify_auction_item"></activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".SignIn"
             android:label="@string/app_name">
             <intent-filter>
@@ -34,15 +40,19 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".SignUp"
             android:label="@string/sign_up_actionbar"></activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".ForgotPassword"
             android:label="@string/forgot_pass_actionbar"></activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".ChangePassword"
             android:label="@string/change_password"></activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".AuctionedHistory"
             android:label="@string/auctioned_history_title"></activity>
     </application>

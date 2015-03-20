@@ -542,7 +542,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 temp = db.rawQuery(tempString, null);
                 if (temp.moveToFirst()) {
                     item.setUserName(temp.getString(0));
-                }else{
+                } else {
                     item.setUserName("Not Mentioned");
                 }
                 item.setBidAmount((c.getString(c.getColumnIndex(TABLE_BID_AMOUNT))));
@@ -555,4 +555,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return history;
     }
+
+    public Boolean ForgotPassword(String UserName, String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_USER + " WHERE "
+                + USER_NAME + " = '" + UserName + "'" +
+                " AND " +
+                EMAIL +
+                " = '" +
+                email +
+                "'" +
+                ";";
+
+        Cursor c = null;
+
+        try {
+            c = db.rawQuery(selectQuery, null);
+
+
+        } catch (Exception e) {
+        }
+
+        if (c.moveToFirst())
+            return true;
+        else
+            return false;
+    }
+
 }
