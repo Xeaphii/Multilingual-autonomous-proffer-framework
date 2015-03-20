@@ -77,25 +77,38 @@ public class AddAuctionItem extends Activity {
                 alertDialog.show();
             }
         });*/
+        TimePicker timepicker = (TimePicker) View.inflate(AddAuctionItem.this, R.layout.date_time_picker, null).findViewById(R.id.time_picker);
+        timepicker.setIs24HourView(true);
+        timepicker.setCurrentHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
         EndDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     final View dialogView = View.inflate(AddAuctionItem.this, R.layout.date_time_picker, null);
+
                     final AlertDialog alertDialog = new AlertDialog.Builder(AddAuctionItem.this).create();
 
                     dialogView.findViewById(R.id.date_time_set).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-                            DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
+                            final int[] Hour = new int[1];
+                            final View dialogView = View.inflate(AddAuctionItem.this, R.layout.date_time_picker, null);
                             TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+                            DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
+                            timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+                                @Override
+                                public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                                    Hour[0] = hourOfDay;
+                                }
+                            });
 
                             Calendar calendar = new GregorianCalendar(datePicker.getYear(),
                                     datePicker.getMonth(),
                                     datePicker.getDayOfMonth(),
-                                    timePicker.getCurrentHour(),
+                                    ((Hour[0]) < 12 ? timePicker.getCurrentHour() : Hour[0] + timePicker.getCurrentHour())
+                                    ,
                                     timePicker.getCurrentMinute());
+
 
                             EndDate.setText(getDate(calendar.getTimeInMillis(), "yyyy-MM-dd hh:mm:ss"));
                             alertDialog.dismiss();

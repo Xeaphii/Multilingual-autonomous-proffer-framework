@@ -340,8 +340,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 if (!CompareDates(c.getString(c.getColumnIndex(END_DATE)), currentDateandTime)) {
                     int MaxUserId = getMaxBidUserId(c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)));
-                    if (MaxUserId != -1 &&
-                            MaxUserId != UserId) {
+                    if (MaxUserId != UserId) {
                         AuctionItem item = new AuctionItem();
                         item.setImageLoc(c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)));
                         item.setTitle((c.getString(c.getColumnIndex(TITLE))));
