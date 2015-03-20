@@ -69,7 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_BID = "CREATE TABLE " + TABLE_BID
             + "(" + TABLE_BID_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + TABLE_BID_USER_ID
-            + " INTEGER," + TABLE_BID_AUCTION_ITEM_ID + " INTEGER," + TABLE_BID_AMOUNT + " VARCHAR(45)"
+            + " INTEGER," + TABLE_BID_AUCTION_ITEM_ID + " INTEGER," + TABLE_BID_AMOUNT + " Integer"
             + ")";
 
 

@@ -83,7 +83,8 @@ public class EditAuctionItem extends Activity {
                 if (result == -1)
                     Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_LONG).show();
                 else {
-                    ImageManup.saveToInternalSorage(ImageResult, getApplicationContext(), Integer.toString(result));
+                    if (ImageResult != null)
+                        ImageManup.saveToInternalSorage(ImageResult, getApplicationContext(), Integer.toString(result));
                     Toast.makeText(getApplicationContext(), "Item updated successfully.", Toast.LENGTH_LONG).show();
                     finish();
                 }
@@ -126,6 +127,7 @@ public class EditAuctionItem extends Activity {
             ModifyPhoto.setImageBitmap(ImageResult);
         }
     }
+
     private void ShowDateTimePicker() {
         final View dialogView = View.inflate(EditAuctionItem.this, R.layout.date_time_picker, null);
 
