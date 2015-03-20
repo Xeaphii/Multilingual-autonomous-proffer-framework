@@ -13,6 +13,16 @@ public class AuctionItem {
     private String Location;
     private int UserId;
 
+    public Boolean getIsEditable() {
+        return isEditable;
+    }
+
+    public void setIsEditable(Boolean isEditable) {
+        this.isEditable = isEditable;
+    }
+
+    private Boolean isEditable=false;
+
     public int getCount() {
         return Count;
     }

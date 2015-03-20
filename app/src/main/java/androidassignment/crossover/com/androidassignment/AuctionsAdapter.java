@@ -65,9 +65,8 @@ public class AuctionsAdapter extends ArrayAdapter<AuctionItem> {
                 context.startActivity(placeBid);
             }
         });
-
         View overflow = single_row.findViewById(R.id.album_overflow);
-        overflow.setOnClickListener(new View.OnClickListener() {
+        if (ActiveAuctions.get(position).getIsEditable()) {overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(context,
@@ -102,6 +101,11 @@ public class AuctionsAdapter extends ArrayAdapter<AuctionItem> {
 
             }
         });
+        } else {
+            overflow.setVisibility(View.GONE);
+        }
+
+
         return single_row;
     }
 }

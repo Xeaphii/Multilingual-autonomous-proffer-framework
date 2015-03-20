@@ -209,7 +209,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(userName)});
     }
 
-    public List<AuctionItem> getActiveAuctions() {
+    public List<AuctionItem> getActiveAuctions(int UserId) {
         List<AuctionItem> Items = new ArrayList<AuctionItem>();
         String selectQuery = "SELECT  * FROM " + TABLE_AUCTION_ITEM + ";";
 
@@ -219,6 +219,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor temp = null;
         String tempString = "";
 
+
         // looping through all rows and adding to list
 
         String currentDateandTime = sdf.format(new Date());
@@ -227,6 +228,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 if (CompareDates(c.getString(c.getColumnIndex(END_DATE)), currentDateandTime)) {
                     AuctionItem item = new AuctionItem();
                     item.setImageLoc(c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)));
+
                     item.setTitle((c.getString(c.getColumnIndex(TITLE))));
                     item.setCategory((c.getString(c.getColumnIndex(CATEGORY))));
                     item.setDescription((c.getString(c.getColumnIndex(DESCRIPTION))));
@@ -234,9 +236,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     item.setEndDate((c.getString(c.getColumnIndex(END_DATE))));
                     item.setLocation((c.getString(c.getColumnIndex(LOCATION))));
                     item.setUserId((c.getInt(c.getColumnIndex(USER_ID))));
+                    if (UserId == c.getInt(c.getColumnIndex(USER_ID))) {
+                        item.setIsEditable(true);
+                    } else {
+                        item.setIsEditable(false);
+                    }
                     tempString = "SELECT  count(*) as CountBid,max(amount) as MaxBid FROM " +
                             TABLE_BID + " WHERE " + TABLE_BID_AUCTION_ITEM_ID + " = "
                             + c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)) + ";";
+
                     temp = db.rawQuery(tempString, null);
                     // adding to  list
 

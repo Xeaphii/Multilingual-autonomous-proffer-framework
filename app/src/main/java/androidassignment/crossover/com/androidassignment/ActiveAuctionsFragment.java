@@ -1,5 +1,7 @@
 package androidassignment.crossover.com.androidassignment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,8 @@ public class ActiveAuctionsFragment extends Fragment {
     ListView lv;
     CacheData cacheData;
     private MenuItem refreshMenuItem = null;
+    SharedPreferences prefs;
+    public static final String MyPREFERENCES = "MyPrefs";
 
     Menu menu = null;
 
@@ -33,7 +37,7 @@ public class ActiveAuctionsFragment extends Fragment {
         ActiveAuctions = new ArrayList<AuctionItem>();
 
 
-
+        prefs = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         db = new DatabaseHelper(getActivity());
         cacheData = new CacheData();
         View rootView = inflater.inflate(R.layout.fragment_active_auctions, container, false);
@@ -48,7 +52,7 @@ public class ActiveAuctionsFragment extends Fragment {
 
 
         protected void onPreExecute() {
-            if(refreshMenuItem != null){
+            if (refreshMenuItem != null) {
                 refreshMenuItem.setActionView(R.layout.action_progressbar);
 
                 refreshMenuItem.expandActionView();
@@ -59,7 +63,7 @@ public class ActiveAuctionsFragment extends Fragment {
             if (cacheData.isActiveDataPresent()) {
                 ActiveAuctions = cacheData.getActiveAuctions();
             } else {
-                ActiveAuctions = db.getActiveAuctions();
+                ActiveAuctions = db.getActiveAuctions(db.GetUserId(prefs.getString("user_name", "")));
                 cacheData.setActiveAuctions(ActiveAuctions);
             }
             return "";
@@ -70,7 +74,7 @@ public class ActiveAuctionsFragment extends Fragment {
             adapter = new AuctionsAdapter(getActivity(), ActiveAuctions);
             lv.setAdapter(adapter);
 
-            if(refreshMenuItem != null){
+            if (refreshMenuItem != null) {
                 refreshMenuItem.collapseActionView();
                 // remove the progress bar view
                 refreshMenuItem.setActionView(null);
@@ -82,7 +86,7 @@ public class ActiveAuctionsFragment extends Fragment {
 
 
         protected void onPreExecute() {
-            if(refreshMenuItem != null){
+            if (refreshMenuItem != null) {
                 refreshMenuItem.setActionView(R.layout.action_progressbar);
 
                 refreshMenuItem.expandActionView();
@@ -91,14 +95,14 @@ public class ActiveAuctionsFragment extends Fragment {
 
         protected String doInBackground(Void... arg0) {
             ActiveAuctions.clear();
-            ActiveAuctions.addAll(db.getActiveAuctions());
+            ActiveAuctions.addAll(db.getActiveAuctions(db.GetUserId(prefs.getString("user_name", ""))));
             return "";
         }
 
 
         protected void onPostExecute(String result) {
             adapter.notifyDataSetChanged();
-            if(refreshMenuItem != null){
+            if (refreshMenuItem != null) {
                 refreshMenuItem.collapseActionView();
                 // remove the progress bar view
                 refreshMenuItem.setActionView(null);
@@ -117,7 +121,7 @@ public class ActiveAuctionsFragment extends Fragment {
 
         protected String doInBackground(Void... arg0) {
             ActiveAuctions.clear();
-            ActiveAuctions.addAll(db.getActiveAuctions());
+            ActiveAuctions.addAll(db.getActiveAuctions(db.GetUserId(prefs.getString("user_name", ""))));
             cacheData.setActiveAuctions(ActiveAuctions);
             return "";
         }

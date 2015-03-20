@@ -35,21 +35,34 @@ public class ChangePassword extends Activity {
             @Override
             public void onClick(View v) {
                 String UserName = prefs.getString("user_name", "");
-                if (!(OldPassword.getText().toString().equals(NewPassword.getText().toString())) &&
-                        !(NewPassword.getText().toString().equals("")))
-                    if (db.VerifyUser(new UserProfile(UserName, Password.getHash(OldPassword.getText().toString
-                            ())))) {
-                        prefs.edit().putString("is_initialized", "0").commit();
-                        prefs.edit().putString("user_name", "").commit();
-                        db.ChangeUserPassword(UserName, Password.getHash(NewPassword.getText().toString()));
-                        finish();
+                if (!(OldPassword.getText().toString().trim().equals(NewPassword.getText().toString().trim())) &&
+                        !(NewPassword.getText().toString().trim().equals(""))) {
+                    if (OldPassword.getText().toString().trim().length() > 5) {
+                        if (NewPassword.getText().toString().trim().length() > 5) {
+                            if (db.VerifyUser(new UserProfile(UserName, Password.getHash(OldPassword.getText().toString
+                                    ())))) {
+                                prefs.edit().putString("is_initialized", "0").commit();
+                                prefs.edit().putString("user_name", "").commit();
+                                db.ChangeUserPassword(UserName, Password.getHash(NewPassword.getText().toString().trim()));
+                                finish();
+                            } else {
+                                ShowToast("Wrong old password");
+                            }
+                        } else {
+                            ShowToast("New Password should be greater than 5 length.");
+                        }
                     } else {
-                        Toast.makeText(getApplicationContext(), "Wrong old password", Toast.LENGTH_LONG).show();
+                        ShowToast("Old Password should be greater than 5 length.");
                     }
-                else{
-                    Toast.makeText(getApplicationContext(), "Modify new password", Toast.LENGTH_LONG).show();
+
+                } else {
+                    ShowToast("Modify new password");
                 }
             }
         });
+    }
+
+    private void ShowToast(String input) {
+        Toast.makeText(getApplicationContext(), input, Toast.LENGTH_SHORT).show();
     }
 }
