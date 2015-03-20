@@ -51,7 +51,7 @@ public class AddAuctionItem extends Activity {
         EndDate = (EditText) findViewById(R.id.et_date_time);
         AddItem = (Button) findViewById(R.id.btn_add_item);
         AddPhoto = (ImageView) findViewById(R.id.iv_add_photo);
-        EndDate.setOnClickListener(new View.OnClickListener() {
+        /*EndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final View dialogView = View.inflate(getApplicationContext(), R.layout.date_time_picker, null);
@@ -75,6 +75,35 @@ public class AddAuctionItem extends Activity {
                     }});
                 alertDialog.setView(dialogView);
                 alertDialog.show();
+            }
+        });*/
+        EndDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    final View dialogView = View.inflate(AddAuctionItem.this, R.layout.date_time_picker, null);
+                    final AlertDialog alertDialog = new AlertDialog.Builder(AddAuctionItem.this).create();
+
+                    dialogView.findViewById(R.id.date_time_set).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
+                            TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+
+                            Calendar calendar = new GregorianCalendar(datePicker.getYear(),
+                                    datePicker.getMonth(),
+                                    datePicker.getDayOfMonth(),
+                                    timePicker.getCurrentHour(),
+                                    timePicker.getCurrentMinute());
+
+                            EndDate.setText(getDate(calendar.getTimeInMillis(), "yyyy-MM-dd hh:mm:ss"));
+                            alertDialog.dismiss();
+                        }
+                    });
+                    alertDialog.setView(dialogView);
+                    alertDialog.show();
+                }
             }
         });
         AddItem.setOnClickListener(new View.OnClickListener() {
@@ -114,8 +143,8 @@ public class AddAuctionItem extends Activity {
             AddPhoto.setImageBitmap(ImageResult);
         }
     }
-    public static String getDate(long milliSeconds, String dateFormat)
-    {
+
+    public static String getDate(long milliSeconds, String dateFormat) {
         // Create a DateFormatter object for displaying date in specified format.
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
 
