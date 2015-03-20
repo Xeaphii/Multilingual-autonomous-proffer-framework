@@ -206,7 +206,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<AuctionItem> getActiveAuctions() {
         List<AuctionItem> Items = new ArrayList<AuctionItem>();
-        String selectQuery = "SELECT  * FROM " + TABLE_AUCTION_ITEM;
+        String selectQuery = "SELECT  * FROM " + TABLE_AUCTION_ITEM+";";
 
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -228,12 +228,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 item.setUserId((c.getInt(c.getColumnIndex(USER_ID))));
                 tempString = "SELECT  count(*) as CountBid,max(amount) as MaxBid FROM " +
                         TABLE_BID + " WHERE " + TABLE_BID_AUCTION_ITEM_ID + " = "
-                        + c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID));
+                        + c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID))+";";
                 temp = db.rawQuery(tempString, null);
                 // adding to todo list
-                if (c.moveToFirst()) {
-                    item.setMaxBid(temp.getInt(c.getColumnIndex("MaxBid")));
-                    item.setCount(temp.getInt(c.getColumnIndex("CountBid")));
+
+                if (temp.moveToFirst()) {
+
+                    if(temp.getInt(0) != 0) {
+                        item.setCount(temp.getInt(0));
+                        item.setMaxBid(temp.getInt(1));
+
+                    }else{
+                        item.setMaxBid(0);
+                        item.setCount(0);
+                    }
                 } else {
                     item.setMaxBid(0);
                     item.setCount(0);
