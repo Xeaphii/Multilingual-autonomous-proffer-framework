@@ -45,7 +45,7 @@ public class PlaceBid extends Activity {
         placeBid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int MaxPrice = db.getMaxBidPrice(Integer.toString(db.GetUserId(prefs.getString("user_name", "0"))));
+                int MaxPrice = db.getMaxBidPrice(Integer.toString(auctionItem.getImageLoc()));
                 if (MaxPrice == 0) {
                     MaxPrice = Integer.parseInt(auctionItem.getMinBid());
                 }
