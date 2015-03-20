@@ -50,10 +50,10 @@ public class PlaceBid extends Activity {
                 if (MaxPrice == 0) {
                     MaxPrice = Integer.parseInt(auctionItem.getMinBid());
                 }
-                if ((!AmountBid.getText().toString().isEmpty()) &&
-                        Integer.parseInt(AmountBid.getText().toString()) > MaxPrice) {
+                if ((!AmountBid.getText().toString().trim().isEmpty()) &&
+                        Integer.parseInt(AmountBid.getText().toString().trim()) > MaxPrice) {
                     db.InsertBid(db.GetUserId(prefs.getString("user_name", "0")),
-                            auctionItem.getImageLoc(), AmountBid.getText().toString());
+                            auctionItem.getImageLoc(), AmountBid.getText().toString().trim());
                     Toast.makeText(getApplicationContext(), "Successfully entered", Toast.LENGTH_LONG).show();
                     finish();
                 } else

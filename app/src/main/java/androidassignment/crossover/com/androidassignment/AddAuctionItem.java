@@ -72,21 +72,50 @@ public class AddAuctionItem extends Activity {
             @Override
             public void onClick(View v) {
                 AuctionItem item = new AuctionItem();
-                item.setTitle(Title.getText().toString());
-                item.setCategory(Category.getText().toString());
-                item.setDescription(Description.getText().toString());
-                item.setMinBid(MinBid.getText().toString());
-                item.setLocation(Location.getText().toString());
-                item.setEndDate(EndDate.getText().toString());
+                item.setTitle(Title.getText().toString().trim());
+                item.setCategory(Category.getText().toString().trim());
+                item.setDescription(Description.getText().toString().trim());
+                item.setMinBid(MinBid.getText().toString().trim());
+                item.setLocation(Location.getText().toString().trim());
+                item.setEndDate(EndDate.getText().toString().trim());
                 item.setUserId(db.GetUserId(prefs.getString("user_name", "")));
-                int result = db.InsertAuctionItem(item);
-                if (result == -1)
-                    Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_LONG).show();
-                else {
-                    ImageManup.saveToInternalSorage(ImageResult, getApplicationContext(), Integer.toString(result));
-                    Toast.makeText(getApplicationContext(), "Item posted successfully.", Toast.LENGTH_LONG).show();
-                    finish();
+                if (Title.getText().toString().trim().length() > 5) {
+                    if (Category.getText().toString().trim().length() > 5) {
+                        if (Description.getText().toString().trim().length() > 5) {
+                            if (MinBid.getText().toString().trim().length() > 0) {
+                                if (Location.getText().toString().trim().length() > 2) {
+                                    if (EndDate.getText().toString().trim().length() > 5) {
+                                        if (ImageResult != null) {
+                                            int result = db.InsertAuctionItem(item);
+                                            if (result == -1)
+                                                Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_LONG).show();
+                                            else {
+                                                ImageManup.saveToInternalSorage(ImageResult, getApplicationContext(), Integer.toString(result));
+                                                Toast.makeText(getApplicationContext(), "Item posted successfully.", Toast.LENGTH_LONG).show();
+                                                finish();
+                                            }
+                                        } else {
+                                            ShowToast("Provide image of item");
+                                        }
+                                    } else {
+                                        ShowToast("Specify EndDate of Bid");
+                                    }
+                                } else {
+                                    ShowToast("Provide Location");
+                                }
+                            } else {
+                                ShowToast("Provide minimum bid amount");
+                            }
+                        } else {
+                            ShowToast("Description must be greater than 5 length");
+                        }
+                    } else {
+                        ShowToast("Category must be greater than 5 length");
+                    }
+                } else {
+                    ShowToast("Title must be greater than 5 length");
                 }
+
 
             }
         });
@@ -131,5 +160,9 @@ public class AddAuctionItem extends Activity {
         });
         alertDialog.setView(dialogView);
         alertDialog.show();
+    }
+
+    private void ShowToast(String input) {
+        Toast.makeText(getApplicationContext(), input, Toast.LENGTH_SHORT).show();
     }
 }

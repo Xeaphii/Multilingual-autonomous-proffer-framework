@@ -80,15 +80,44 @@ public class EditAuctionItem extends Activity {
                 item.setMinBid(MinBid.getText().toString());
                 item.setLocation(Location.getText().toString());
                 item.setEndDate(EndDate.getText().toString());
-                int result = db.UpdateAuctionItem(key, item);
-                if (result == -1)
-                    Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_LONG).show();
-                else {
-                    if (ImageResult != null)
-                        ImageManup.saveToInternalSorage(ImageResult, getApplicationContext(), Integer.toString(result));
-                    Toast.makeText(getApplicationContext(), "Item updated successfully.", Toast.LENGTH_LONG).show();
-                    finish();
+
+
+                if (Title.getText().toString().trim().length() > 5) {
+                    if (Category.getText().toString().trim().length() > 5) {
+                        if (Description.getText().toString().trim().length() > 5) {
+                            if (MinBid.getText().toString().trim().length() > 0) {
+                                if (Location.getText().toString().trim().length() > 2) {
+                                    if (EndDate.getText().toString().trim().length() > 5) {
+
+                                        int result = db.UpdateAuctionItem(key, item);
+                                        if (result == -1)
+                                            Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_LONG).show();
+                                        else {
+                                            if (ImageResult != null)
+                                                ImageManup.saveToInternalSorage(ImageResult, getApplicationContext(), Integer.toString(result));
+                                            Toast.makeText(getApplicationContext(), "Item updated successfully.", Toast.LENGTH_LONG).show();
+                                            finish();
+                                        }
+
+                                    } else {
+                                        ShowToast("Specify EndDate of Bid");
+                                    }
+                                } else {
+                                    ShowToast("Provide Location");
+                                }
+                            } else {
+                                ShowToast("Provide minimum bid amount");
+                            }
+                        } else {
+                            ShowToast("Description must be greater than 5 length");
+                        }
+                    } else {
+                        ShowToast("Category must be greater than 5 length");
+                    }
+                } else {
+                    ShowToast("Title must be greater than 5 length");
                 }
+
 
             }
         });
@@ -154,5 +183,9 @@ public class EditAuctionItem extends Activity {
         });
         alertDialog.setView(dialogView);
         alertDialog.show();
+    }
+
+    private void ShowToast(String input) {
+        Toast.makeText(getApplicationContext(), input, Toast.LENGTH_SHORT).show();
     }
 }
