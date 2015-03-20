@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -19,6 +22,9 @@ public class LostAuctionsFragment extends Fragment {
     SoldAuctionsAdapter adapter;
     ListView lv;
     CacheData cacheData;
+    private MenuItem refreshMenuItem = null;
+
+    Menu menu = null;
     SharedPreferences prefs;
     public static final String MyPREFERENCES = "MyPrefs";
 
@@ -29,15 +35,22 @@ public class LostAuctionsFragment extends Fragment {
         prefs = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         db = new DatabaseHelper(getActivity());
         cacheData = new CacheData();
+        setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_lost_auctions, container, false);
         lv = (ListView) rootView.findViewById(R.id.listView);
         new GetLostAuctions().execute();
         return rootView;
     }
+
     class GetLostAuctions extends AsyncTask<Void, Integer, String> {
 
 
         protected void onPreExecute() {
+            if (refreshMenuItem != null) {
+                refreshMenuItem.setActionView(R.layout.action_progressbar);
+
+                refreshMenuItem.expandActionView();
+            }
         }
 
         protected String doInBackground(Void... arg0) {
@@ -55,30 +68,39 @@ public class LostAuctionsFragment extends Fragment {
             adapter = new SoldAuctionsAdapter(getActivity(), LostAuctions);
             lv.setAdapter(adapter);
 
-            /*lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent placeBid = new Intent(getActivity(), PlaceBid.class);
-                    startActivity(placeBid);
-                }
-            });*/
+            if (refreshMenuItem != null) {
+                refreshMenuItem.collapseActionView();
+                // remove the progress bar view
+                refreshMenuItem.setActionView(null);
+            }
         }
     }
+
     class RefreshItems extends AsyncTask<Void, Integer, String> {
 
 
         protected void onPreExecute() {
+            if (refreshMenuItem != null) {
+                refreshMenuItem.setActionView(R.layout.action_progressbar);
+
+                refreshMenuItem.expandActionView();
+            }
         }
 
         protected String doInBackground(Void... arg0) {
             LostAuctions.clear();
-           LostAuctions.addAll(db.getLostAuctions(db.GetUserId(prefs.getString("user_name", ""))));
+            LostAuctions.addAll(db.getLostAuctions(db.GetUserId(prefs.getString("user_name", ""))));
             return "";
         }
 
 
         protected void onPostExecute(String result) {
             adapter.notifyDataSetChanged();
+            if (refreshMenuItem != null) {
+                refreshMenuItem.collapseActionView();
+                // remove the progress bar view
+                refreshMenuItem.setActionView(null);
+            }
         }
     }
 
@@ -88,8 +110,63 @@ public class LostAuctionsFragment extends Fragment {
         new RefreshItems().execute();
     }
 
+    class RefreshItemsCustom extends AsyncTask<Void, Integer, String> {
+
+
+        protected void onPreExecute() {
+            refreshMenuItem.setActionView(R.layout.action_progressbar);
+
+            refreshMenuItem.expandActionView();
+        }
+
+        protected String doInBackground(Void... arg0) {
+            LostAuctions.clear();
+            LostAuctions.clear();
+            LostAuctions.addAll(db.getLostAuctions(db.GetUserId(prefs.getString("user_name", ""))));
+            cacheData.setWonAuctions(LostAuctions);
+            return "";
+        }
+
+
+        protected void onPostExecute(String result) {
+            adapter.notifyDataSetChanged();
+            refreshMenuItem.collapseActionView();
+            // remove the progress bar view
+            refreshMenuItem.setActionView(null);
+/*
+            Toast.makeText(getActivity(), "Lost", Toast.LENGTH_SHORT).show();
+*/
+
+        }
+    }
+
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Take appropriate action for each action item click
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                refreshMenuItem = item;
+                new RefreshItemsCustom().execute();
+                // search action
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        this.menu = menu;
+        refreshMenuItem = menu.findItem(R.id.action_refresh);
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 }

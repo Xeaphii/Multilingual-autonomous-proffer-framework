@@ -3,7 +3,7 @@
     tools:context=".MainActivity">
     <item
         android:id="@+id/action_add_item"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/add_action"
         android:title="@string/add_item"
         android:showAsAction="ifRoom" />
     <item

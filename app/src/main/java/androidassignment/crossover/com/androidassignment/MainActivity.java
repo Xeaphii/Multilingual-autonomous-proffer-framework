@@ -122,6 +122,7 @@ public class MainActivity extends FragmentActivity implements
                 // search action
                 return true;
 
+
             default:
                 return super.onOptionsItemSelected(item);
         }

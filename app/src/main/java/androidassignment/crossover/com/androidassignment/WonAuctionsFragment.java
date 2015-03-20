@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -21,6 +24,9 @@ public class WonAuctionsFragment extends Fragment {
     CacheData cacheData;
     SharedPreferences prefs;
     public static final String MyPREFERENCES = "MyPrefs";
+    private MenuItem refreshMenuItem = null;
+
+    Menu menu = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,6 +35,7 @@ public class WonAuctionsFragment extends Fragment {
         prefs = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         db = new DatabaseHelper(getActivity());
         cacheData = new CacheData();
+        setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_won_auctions, container, false);
         lv = (ListView) rootView.findViewById(R.id.listView);
         new GetWonAuctions().execute();
@@ -39,6 +46,11 @@ public class WonAuctionsFragment extends Fragment {
 
 
         protected void onPreExecute() {
+            if(refreshMenuItem != null){
+                refreshMenuItem.setActionView(R.layout.action_progressbar);
+
+                refreshMenuItem.expandActionView();
+            }
         }
 
         protected String doInBackground(Void... arg0) {
@@ -57,13 +69,11 @@ public class WonAuctionsFragment extends Fragment {
             adapter = new SoldAuctionsAdapter(getActivity(), WonAuctions);
             lv.setAdapter(adapter);
 
-            /*lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent placeBid = new Intent(getActivity(), PlaceBid.class);
-                    startActivity(placeBid);
-                }
-            });*/
+            if(refreshMenuItem != null){
+                refreshMenuItem.collapseActionView();
+                // remove the progress bar view
+                refreshMenuItem.setActionView(null);
+            }
         }
     }
 
@@ -71,6 +81,11 @@ public class WonAuctionsFragment extends Fragment {
 
 
         protected void onPreExecute() {
+            if(refreshMenuItem != null){
+                refreshMenuItem.setActionView(R.layout.action_progressbar);
+
+                refreshMenuItem.expandActionView();
+            }
         }
 
         protected String doInBackground(Void... arg0) {
@@ -82,6 +97,11 @@ public class WonAuctionsFragment extends Fragment {
 
         protected void onPostExecute(String result) {
             adapter.notifyDataSetChanged();
+            if(refreshMenuItem != null){
+                refreshMenuItem.collapseActionView();
+                // remove the progress bar view
+                refreshMenuItem.setActionView(null);
+            }
         }
     }
 
@@ -90,9 +110,60 @@ public class WonAuctionsFragment extends Fragment {
         super.onResume();
         new RefreshItems().execute();
     }
+    class RefreshItemsCustom extends AsyncTask<Void, Integer, String> {
+
+
+        protected void onPreExecute() {
+            refreshMenuItem.setActionView(R.layout.action_progressbar);
+
+            refreshMenuItem.expandActionView();
+        }
+
+        protected String doInBackground(Void... arg0) {
+            WonAuctions.clear();
+            WonAuctions.addAll(db.getWonAuctions(db.GetUserId(prefs.getString("user_name", ""))));
+            cacheData.setWonAuctions(WonAuctions);
+            return "";
+        }
+
+
+        protected void onPostExecute(String result) {
+            adapter.notifyDataSetChanged();
+            refreshMenuItem.collapseActionView();
+            // remove the progress bar view
+            refreshMenuItem.setActionView(null);
+/*
+            Toast.makeText(getActivity(),"Won",Toast.LENGTH_SHORT).show();
+*/
+        }
+    }
 
     @Override
     public void onPause() {
         super.onPause();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Take appropriate action for each action item click
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                refreshMenuItem = item;
+                new RefreshItemsCustom().execute();
+                // search action
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        this.menu = menu;
+        refreshMenuItem = menu.findItem(R.id.action_refresh);
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 }
