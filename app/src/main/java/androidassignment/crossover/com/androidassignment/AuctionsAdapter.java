@@ -24,12 +24,14 @@ public class AuctionsAdapter extends ArrayAdapter<AuctionItem> {
     Context context;
     private List<AuctionItem> ActiveAuctions;
     private static String ITEM_ID = "item_id";
+    DatabaseHelper db;
 
     public AuctionsAdapter(Activity context, List<AuctionItem> activeAuctions) {
         super(context, R.layout.auctions_row, activeAuctions);
         // TODO Auto-generated constructor stub
         ActiveAuctions = new ArrayList<AuctionItem>();
         this.ActiveAuctions = activeAuctions;
+        db = new DatabaseHelper(context);
         this.context = context;
     }
 
@@ -81,6 +83,9 @@ public class AuctionsAdapter extends ArrayAdapter<AuctionItem> {
                                 // TODO Auto-generated method stub
                                 if (arg0.getItemId() == R.id.action_delete) {
                                     //do something
+                                    db.DeleteAuctionItem(Integer.toString(ActiveAuctions.get(position).getImageLoc()));
+                                    ActiveAuctions.remove(position);
+                                    notifyDataSetChanged();
                                 } else {
                                     Intent editItem = new Intent(context, EditAuctionItem.class);
 

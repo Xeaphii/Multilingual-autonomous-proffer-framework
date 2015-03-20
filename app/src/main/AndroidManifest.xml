@@ -26,7 +26,7 @@
             android:label="@string/modify_auction_item"></activity>
         <activity
             android:name=".SignIn"
-            android:label="@string/sign_in_actionbar">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

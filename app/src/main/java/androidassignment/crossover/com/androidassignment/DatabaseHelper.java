@@ -420,4 +420,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.update(TABLE_AUCTION_ITEM, values, TABLE_AUCTION_ITEM_KEY_ID + " = ?",
                 new String[]{String.valueOf(key)});
     }
+
+    public void DeleteAuctionItem(String key) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        db.delete(TABLE_AUCTION_ITEM, TABLE_AUCTION_ITEM_KEY_ID + " = ?",
+                new String[]{String.valueOf(key)});
+        db.close();
+
+    }
 }
