@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class AuctionsAdapter extends ArrayAdapter<AuctionItem> {
 
     Context context;
     private List<AuctionItem> ActiveAuctions;
+    private static String ITEM_ID = "item_id";
 
     public AuctionsAdapter(Activity context, List<AuctionItem> activeAuctions) {
         super(context, R.layout.auctions_row, activeAuctions);
@@ -32,7 +34,7 @@ public class AuctionsAdapter extends ArrayAdapter<AuctionItem> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,13 +46,23 @@ public class AuctionsAdapter extends ArrayAdapter<AuctionItem> {
         TextView AuctionTimeDate = (TextView) single_row.findViewById(R.id.auction_items_date_time);
         TextView AuctionLocation = (TextView) single_row.findViewById(R.id.auction_items_location);
         ImageView imageView = (ImageView) single_row.findViewById(R.id.iv_auction_image);
+        Button PlaceBid = (Button) single_row.findViewById(R.id.bt_place_bid);
+
 
         AuctionTitle.setText(ActiveAuctions.get(position).getTitle());
         AuctionTimeDate.setText(ActiveAuctions.get(position).getEndDate());
         AuctionLocation.setText(ActiveAuctions.get(position).getLocation());
         AuctionPrice.setText(Integer.toString(ActiveAuctions.get(position).getMaxBid()));
         AuctionCountBids.setText(Integer.toString(ActiveAuctions.get(position).getCount()));
-        imageView.setImageBitmap(ImageManup.loadImageFromStorage(Integer.toString(ActiveAuctions.get(position).getImageLoc()), context))    ;
+        imageView.setImageBitmap(ImageManup.loadImageFromStorage(Integer.toString(ActiveAuctions.get(position).getImageLoc()), context));
+        PlaceBid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent placeBid = new Intent(context, PlaceBid.class);
+                placeBid.putExtra(ITEM_ID, Integer.toString(ActiveAuctions.get(position).getImageLoc()));
+                context.startActivity(placeBid);
+            }
+        });
 
         View overflow = single_row.findViewById(R.id.album_overflow);
         overflow.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +83,8 @@ public class AuctionsAdapter extends ArrayAdapter<AuctionItem> {
                                     //do something
                                 } else {
                                     Intent editItem = new Intent(context, EditAuctionItem.class);
+
+                                    editItem.putExtra(ITEM_ID, Integer.toString(ActiveAuctions.get(position).getImageLoc()));
                                     context.startActivity(editItem);
 
                                 }

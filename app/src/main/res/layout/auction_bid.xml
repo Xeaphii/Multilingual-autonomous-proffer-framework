@@ -39,6 +39,7 @@
                             android:background="@drawable/edittext_default_bg"
                             android:layout_marginTop="-2dp"
                             android:padding="10dp"
+                            android:enabled="false"
                             android:layout_marginBottom="5dp"
                             android:hint="Auction item title"
                             android:textColorHint="#bbbbbb"
@@ -47,6 +48,7 @@
                         <EditText
                             android:id="@+id/et_category"
                             android:layout_width="match_parent"
+                            android:enabled="false"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edittext_default_bg"
                             android:layout_marginTop="-2dp"
@@ -72,8 +74,9 @@
 
                         <ImageView
                             android:id="@+id/iv_add_photo"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="98dp"
+                            android:layout_centerInParent="true"
+                            android:layout_height="98dp"
                             android:scaleType="fitXY"
                             android:background="@drawable/cam" />
 
@@ -81,7 +84,7 @@
                 </RelativeLayout>
 
                 <EditText
-                    android:id="@+id/et_min_bid"
+                    android:id="@+id/et_place_bid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_bottom_bg"
@@ -99,6 +102,7 @@
                     android:inputType="textMultiLine"
                     android:layout_marginBottom="5dp"
                     android:lines="5"
+                    android:enabled="false"
                     android:minLines="4"
                     android:gravity="top|left"
                     android:maxLines="5"
@@ -122,6 +126,7 @@
                     android:layout_marginTop="-2dp"
                     android:padding="10dp"
                     android:hint="End date"
+                    android:enabled="false"
                     android:textColorHint="#bbbbbb"
                     android:layout_marginBottom="5dp"
                     android:drawableLeft="@drawable/datetime" />
@@ -134,6 +139,7 @@
                     android:background="@drawable/edittext_bottom_bg"
                     android:layout_marginTop="-2dp"
                     android:padding="10dp"
+                    android:enabled="false"
                     android:hint="Location"
                     android:textColorHint="#bbbbbb"
                     android:drawableLeft="@drawable/location" />

@@ -1,13 +1,11 @@
 package androidassignment.crossover.com.androidassignment;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -22,6 +20,7 @@ public class ActiveAuctionsFragment extends Fragment {
     ListView lv;
     CacheData cacheData;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,6 +29,7 @@ public class ActiveAuctionsFragment extends Fragment {
         cacheData = new CacheData();
         View rootView = inflater.inflate(R.layout.fragment_active_auctions, container, false);
         lv = (ListView) rootView.findViewById(R.id.listView);
+
         new GetActiveAuctions().execute();
         return rootView;
     }
@@ -55,13 +55,13 @@ public class ActiveAuctionsFragment extends Fragment {
             adapter = new AuctionsAdapter(getActivity(), ActiveAuctions);
             lv.setAdapter(adapter);
 
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /*lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent placeBid = new Intent(getActivity(), PlaceBid.class);
                     startActivity(placeBid);
                 }
-            });
+            });*/
         }
     }
 

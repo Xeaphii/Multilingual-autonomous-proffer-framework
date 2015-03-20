@@ -1,13 +1,11 @@
 package androidassignment.crossover.com.androidassignment;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -52,13 +50,13 @@ public class WonAuctionsFragment extends Fragment {
             adapter = new AuctionsAdapter(getActivity(), WonAuctions);
             lv.setAdapter(adapter);
 
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /*lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent placeBid = new Intent(getActivity(), PlaceBid.class);
                     startActivity(placeBid);
                 }
-            });
+            });*/
         }
     }
     class RefreshItems extends AsyncTask<Void, Integer, String> {
