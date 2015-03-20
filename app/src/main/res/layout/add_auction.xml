@@ -43,7 +43,7 @@
                             android:layout_marginBottom="5dp"
                             android:hint="Auction item title"
                             android:textColorHint="#bbbbbb"
-                            android:drawableLeft="@drawable/user" />
+                            android:drawableLeft="@drawable/title" />
 
                         <EditText
                             android:id="@+id/et_category"
@@ -55,7 +55,7 @@
                             android:layout_marginBottom="5dp"
                             android:hint="Category"
                             android:textColorHint="#bbbbbb"
-                            android:drawableLeft="@drawable/user" />
+                            android:drawableLeft="@drawable/category" />
                     </LinearLayout>
 
                     <RelativeLayout
@@ -105,6 +105,7 @@
                     android:scrollbars="vertical"
                     android:background="@drawable/edittext_default_bg"
                     android:layout_marginTop="-2dp"
+
                     android:padding="10dp"
                     android:layout_marginBottom="15dp"
                     android:hint="Description"
@@ -120,8 +121,7 @@
                     android:hint="Minimum bid"
                     android:layout_marginBottom="5dp"
                     android:textColorHint="#bbbbbb"
-                    android:password="true"
-                    android:drawableLeft="@drawable/password" />
+                    android:drawableLeft="@drawable/money" />
 
 
                 <EditText
@@ -133,9 +133,8 @@
                     android:padding="10dp"
                     android:hint="End date"
                     android:textColorHint="#bbbbbb"
-                    android:password="true"
                     android:layout_marginBottom="5dp"
-                    android:drawableLeft="@drawable/password" />
+                    android:drawableLeft="@drawable/datetime" />
 
                 <EditText
                     android:id="@+id/et_location"
@@ -147,8 +146,7 @@
                     android:padding="10dp"
                     android:hint="Location"
                     android:textColorHint="#bbbbbb"
-                    android:password="true"
-                    android:drawableLeft="@drawable/password" />
+                    android:drawableLeft="@drawable/location" />
 
 
             </LinearLayout>

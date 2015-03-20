@@ -15,20 +15,19 @@ import java.util.List;
 
 public class ActiveAuctionsFragment extends Fragment {
 
-    String color_names[] = {"red", "green", "blue", "yellow", "pink", "brown"};
-    Integer image_id[] = {R.drawable.ic_launcher, R.drawable.ic_launcher,
-            R.drawable.ic_launcher, R.drawable.ic_launcher,
-            R.drawable.ic_launcher, R.drawable.ic_launcher};
+
     DatabaseHelper db;
     private List<AuctionItem> ActiveAuctions;
     AuctionsAdapter adapter;
     ListView lv;
+    CacheData cacheData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ActiveAuctions = new ArrayList<AuctionItem>();
         db = new DatabaseHelper(getActivity());
+        cacheData = new CacheData();
         View rootView = inflater.inflate(R.layout.fragment_active_auctions, container, false);
         lv = (ListView) rootView.findViewById(R.id.listView);
         new GetActiveAuctions().execute();
@@ -42,13 +41,18 @@ public class ActiveAuctionsFragment extends Fragment {
         }
 
         protected String doInBackground(Void... arg0) {
-            ActiveAuctions = db.getActiveAuctions();
+            if (cacheData.isActiveDataPresent()) {
+                ActiveAuctions = cacheData.getActiveAuctions();
+            } else {
+                ActiveAuctions = db.getActiveAuctions();
+                cacheData.setActiveAuctions(ActiveAuctions);
+            }
             return "";
         }
 
 
         protected void onPostExecute(String result) {
-            adapter = new AuctionsAdapter(getActivity(),ActiveAuctions );
+            adapter = new AuctionsAdapter(getActivity(), ActiveAuctions);
             lv.setAdapter(adapter);
 
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,4 +65,32 @@ public class ActiveAuctionsFragment extends Fragment {
         }
     }
 
+    class RefreshItems extends AsyncTask<Void, Integer, String> {
+
+
+        protected void onPreExecute() {
+        }
+
+        protected String doInBackground(Void... arg0) {
+            ActiveAuctions.clear();
+            ActiveAuctions.addAll(db.getActiveAuctions());
+            return "";
+        }
+
+
+        protected void onPostExecute(String result) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new RefreshItems().execute();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 }

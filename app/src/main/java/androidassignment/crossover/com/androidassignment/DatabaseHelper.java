@@ -252,4 +252,100 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return Items;
     }
+    public List<AuctionItem> getWonAuctions() {
+        List<AuctionItem> Items = new ArrayList<AuctionItem>();
+        String selectQuery = "SELECT  * FROM " + TABLE_AUCTION_ITEM+";";
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor temp = null;
+        String tempString = "";
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                AuctionItem item = new AuctionItem();
+                item.setImageLoc(c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)));
+                item.setTitle((c.getString(c.getColumnIndex(TITLE))));
+                item.setCategory((c.getString(c.getColumnIndex(CATEGORY))));
+                item.setDescription((c.getString(c.getColumnIndex(DESCRIPTION))));
+                item.setMinBid((c.getString(c.getColumnIndex(MIN_BID))));
+                item.setEndDate((c.getString(c.getColumnIndex(END_DATE))));
+                item.setLocation((c.getString(c.getColumnIndex(LOCATION))));
+                item.setUserId((c.getInt(c.getColumnIndex(USER_ID))));
+                tempString = "SELECT  count(*) as CountBid,max(amount) as MaxBid FROM " +
+                        TABLE_BID + " WHERE " + TABLE_BID_AUCTION_ITEM_ID + " = "
+                        + c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID))+";";
+                temp = db.rawQuery(tempString, null);
+                // adding to todo list
+
+                if (temp.moveToFirst()) {
+
+                    if(temp.getInt(0) != 0) {
+                        item.setCount(temp.getInt(0));
+                        item.setMaxBid(temp.getInt(1));
+
+                    }else{
+                        item.setMaxBid(0);
+                        item.setCount(0);
+                    }
+                } else {
+                    item.setMaxBid(0);
+                    item.setCount(0);
+                }
+                Items.add(item);
+            } while (c.moveToNext());
+        }
+
+        return Items;
+    }
+    public List<AuctionItem> getLostAuctions() {
+        List<AuctionItem> Items = new ArrayList<AuctionItem>();
+        String selectQuery = "SELECT  * FROM " + TABLE_AUCTION_ITEM+";";
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor temp = null;
+        String tempString = "";
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                AuctionItem item = new AuctionItem();
+                item.setImageLoc(c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID)));
+                item.setTitle((c.getString(c.getColumnIndex(TITLE))));
+                item.setCategory((c.getString(c.getColumnIndex(CATEGORY))));
+                item.setDescription((c.getString(c.getColumnIndex(DESCRIPTION))));
+                item.setMinBid((c.getString(c.getColumnIndex(MIN_BID))));
+                item.setEndDate((c.getString(c.getColumnIndex(END_DATE))));
+                item.setLocation((c.getString(c.getColumnIndex(LOCATION))));
+                item.setUserId((c.getInt(c.getColumnIndex(USER_ID))));
+                tempString = "SELECT  count(*) as CountBid,max(amount) as MaxBid FROM " +
+                        TABLE_BID + " WHERE " + TABLE_BID_AUCTION_ITEM_ID + " = "
+                        + c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID))+";";
+                temp = db.rawQuery(tempString, null);
+                // adding to todo list
+
+                if (temp.moveToFirst()) {
+
+                    if(temp.getInt(0) != 0) {
+                        item.setCount(temp.getInt(0));
+                        item.setMaxBid(temp.getInt(1));
+
+                    }else{
+                        item.setMaxBid(0);
+                        item.setCount(0);
+                    }
+                } else {
+                    item.setMaxBid(0);
+                    item.setCount(0);
+                }
+                Items.add(item);
+            } while (c.moveToNext());
+        }
+
+        return Items;
+    }
 }
