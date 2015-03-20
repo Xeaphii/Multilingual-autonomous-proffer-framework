@@ -15,6 +15,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class MainActivity extends FragmentActivity implements
         ActionBar.TabListener {
@@ -22,11 +25,13 @@ public class MainActivity extends FragmentActivity implements
     private ViewPager viewPager;
     private TabsPagerAdapter mAdapter;
     private ActionBar actionBar;
+    DatabaseHelper db;
     // Tab titles
     private String[] tabs = {"Active", "Won", "Lost"};
     SharedPreferences prefs;
     public static final String MyPREFERENCES = "MyPrefs";
     private static final int CHECK_ACTIVITY = 1;
+    Timer timer;
 
 
     @Override
@@ -34,6 +39,7 @@ public class MainActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);
+        db = new DatabaseHelper(getApplicationContext());
 
         // Initilization
         prefs = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -72,6 +78,37 @@ public class MainActivity extends FragmentActivity implements
             public void onPageScrollStateChanged(int arg0) {
             }
         });
+        //Bot Creation
+        db.InsertUser(new UserProfile("bot@gmail.com", "Bot", Password.getHash("12345")));
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                db.RandomBid();
+            }
+        }, 2000, 5000);
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        timer.cancel();
+        timer = null;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                db.RandomBid();
+            }
+        }, 2000, 5000);
     }
 
     @Override
