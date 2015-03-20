@@ -83,10 +83,10 @@ public class EditAuctionItem extends Activity {
 
 
                 if (Title.getText().toString().trim().length() > 5) {
-                    if (Category.getText().toString().trim().length() > 5) {
+                    if (Category.getText().toString().trim().length() > 2) {
                         if (Description.getText().toString().trim().length() > 5) {
                             if (MinBid.getText().toString().trim().length() > 0) {
-                                if (Location.getText().toString().trim().length() > 2) {
+                                if (Location.getText().toString().trim().length() > 1) {
                                     if (EndDate.getText().toString().trim().length() > 5) {
 
                                         int result = db.UpdateAuctionItem(key, item);
@@ -112,7 +112,7 @@ public class EditAuctionItem extends Activity {
                             ShowToast("Description must be greater than 5 length");
                         }
                     } else {
-                        ShowToast("Category must be greater than 5 length");
+                        ShowToast("Specify category");
                     }
                 } else {
                     ShowToast("Title must be greater than 5 length");
