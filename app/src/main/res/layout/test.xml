@@ -4,40 +4,185 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <LinearLayout
-        android:id="@+id/buttons"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Custom Button1" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Custom Button2" />
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="fill_parent"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="fill_parent"
-        android:layout_above="@id/buttons">
-        <!--Scrollable content here-->
+        android:layout_width="fill_parent"
+        android:fillViewport="true">
+
         <LinearLayout
+            android:id="@+id/LinearLayout01"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_height="wrap_content"
+            <!-- content goes here -->
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:text="test text"
-                android:textSize="40dp" />
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/log_in_layout"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="10dp">
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_marginRight="105dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/et_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_default_bg"
+                                android:layout_marginTop="-2dp"
+                                android:padding="10dp"
+                                android:layout_marginBottom="5dp"
+                                android:hint="Auction item title"
+                                android:textColorHint="#bbbbbb"
+                                android:drawableLeft="@drawable/title" />
+
+                            <EditText
+                                android:id="@+id/et_category"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_default_bg"
+                                android:layout_marginTop="-2dp"
+                                android:padding="10dp"
+                                android:layout_marginBottom="5dp"
+                                android:hint="Category"
+                                android:textColorHint="#bbbbbb"
+                                android:drawableLeft="@drawable/category" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/snap_layout"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp">
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:scaleType="fitXY"
+                                android:background="@drawable/image_frame" />
+
+                            <ImageView
+                                android:id="@+id/iv_add_photo"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:scaleType="fitXY"
+                                android:background="@drawable/cam" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:layout_centerHorizontal="true"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@color/white_text"
+                                android:textSize="18dp"
+                                android:text="Add photo" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+
+                    <EditText
+                        android:id="@+id/et_descp"
+                        android:inputType="textMultiLine"
+
+                        android:lines="5"
+                        android:minLines="4"
+                        android:gravity="top|left"
+                        android:maxLines="5"
+                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        android:scrollbars="vertical"
+                        android:background="@drawable/edittext_default_bg"
+                        android:layout_marginTop="-2dp"
+
+                        android:padding="10dp"
+                        android:layout_marginBottom="15dp"
+                        android:hint="Description"
+                        android:textColorHint="#bbbbbb" />
+
+                    <EditText
+                        android:id="@+id/et_min_bid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_bottom_bg"
+                        android:layout_marginTop="-2dp"
+                        android:padding="10dp"
+                        android:hint="Minimum bid"
+                        android:layout_marginBottom="5dp"
+                        android:textColorHint="#bbbbbb"
+                        android:drawableLeft="@drawable/money" />
+
+
+                    <EditText
+                        android:id="@+id/et_date_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_bottom_bg"
+                        android:layout_marginTop="-2dp"
+                        android:padding="10dp"
+                        android:hint="End date"
+                        android:textColorHint="#bbbbbb"
+                        android:layout_marginBottom="5dp"
+                        android:drawableLeft="@drawable/datetime" />
+
+                    <EditText
+                        android:id="@+id/et_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/edittext_bottom_bg"
+                        android:layout_marginTop="-2dp"
+                        android:padding="10dp"
+                        android:hint="Location"
+                        android:textColorHint="#bbbbbb"
+                        android:drawableLeft="@drawable/location" />
+
+
+                </LinearLayout>
+            </RelativeLayout>
+            <!-- stretching frame layout, using layout_weight -->
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"></FrameLayout>
+
+            <!-- content fixated to the bottom of the screen -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <!-- your bottom content -->
+                <Button
+                    android:id="@+id/btn_add_item"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_margin="4dp"
+                    android:text="@string/continue_button"
+                    style="@style/DefaultButtonText"
+                    android:background="@drawable/button_default_bg" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
