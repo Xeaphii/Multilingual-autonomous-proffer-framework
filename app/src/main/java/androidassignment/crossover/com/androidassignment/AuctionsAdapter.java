@@ -48,6 +48,8 @@ public class AuctionsAdapter extends ArrayAdapter<AuctionItem> {
         AuctionTitle.setText(ActiveAuctions.get(position).getTitle());
         AuctionTimeDate.setText(ActiveAuctions.get(position).getEndDate());
         AuctionLocation.setText(ActiveAuctions.get(position).getLocation());
+        AuctionPrice.setText(ActiveAuctions.get(position).getMaxBid());
+        AuctionCountBids.setText(ActiveAuctions.get(position).getCount());
         imageView.setImageBitmap(ImageManup.loadImageFromStorage(Integer.toString(ActiveAuctions.get(position).getImageLoc()), context))    ;
 
         View overflow = single_row.findViewById(R.id.album_overflow);

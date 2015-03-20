@@ -13,6 +13,25 @@ public class AuctionItem {
     private String Location;
     private int UserId;
 
+    public int getCount() {
+        return Count;
+    }
+
+    public void setCount(int count) {
+        Count = count;
+    }
+
+    public int getMaxBid() {
+        return MaxBid;
+    }
+
+    public void setMaxBid(int maxBid) {
+        MaxBid = maxBid;
+    }
+
+    private int Count;
+    private int MaxBid;
+
     public int getUserId() {
         return UserId;
     }

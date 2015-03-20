@@ -143,7 +143,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long temp = database.insert(TABLE_AUCTION_ITEM, null, values);
         database.close();
-        return (int)temp;
+        return (int) temp;
 
     }
 
@@ -211,6 +211,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
+        Cursor temp = null;
+        String tempString = "";
 
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
@@ -224,8 +226,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 item.setEndDate((c.getString(c.getColumnIndex(END_DATE))));
                 item.setLocation((c.getString(c.getColumnIndex(LOCATION))));
                 item.setUserId((c.getInt(c.getColumnIndex(USER_ID))));
-
+                tempString = "SELECT  count(*) as CountBid,max(amount) as MaxBid FROM " +
+                        TABLE_BID + " WHERE " + TABLE_BID_AUCTION_ITEM_ID + " = "
+                        + c.getInt(c.getColumnIndex(TABLE_AUCTION_ITEM_KEY_ID));
+                temp = db.rawQuery(tempString, null);
                 // adding to todo list
+                if (c.moveToFirst()) {
+                    item.setMaxBid(temp.getInt(c.getColumnIndex("MaxBid")));
+                    item.setCount(temp.getInt(c.getColumnIndex("CountBid")));
+                } else {
+                    item.setMaxBid(0);
+                    item.setCount(0);
+                }
                 Items.add(item);
             } while (c.moveToNext());
         }
